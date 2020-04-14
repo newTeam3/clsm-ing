@@ -1,0 +1,32 @@
+# 配置数据源
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://119.29.94.69:3306/classes?serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: root
+    password: '@Hhj1998'
+
+  jackson:
+    #json转换的时间格式设置
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      indent_output: true
+
+mybatis:
+  #配置别名基础包
+  type-aliases-package: com.fei.springboot.management.vo
+  configuration:
+    #下划线命名与驼峰命名法的自动映射
+    map-underscore-to-camel-case: true
+  mapper-locations:
+server:
+  port: 8080
+  servlet:
+    context-path:
+#设置指定包的日志输出级别
+logging:
+  level:
+    com: debug
+
+
