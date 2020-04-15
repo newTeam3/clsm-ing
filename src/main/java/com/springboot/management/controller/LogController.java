@@ -33,7 +33,7 @@ public class LogController {
     }
 
     @ApiOperation(value = "日志分页查询")
-    @GetMapping("all")
+    @PostMapping("all")
     public ResponseEntity<?> findAllByPage(@RequestBody PageVO pageVO){
         PageInfo pageInfo = logService.findAllByPage(pageVO);
         return ResponseEntity.ok(pageInfo);
