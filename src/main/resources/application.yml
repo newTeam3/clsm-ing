@@ -15,11 +15,12 @@ spring:
 
 mybatis:
   #配置别名基础包
+  mapper-locations: classpath:mybatis/*Mapper.xml
   type-aliases-package: com.fei.springboot.management.vo
   configuration:
     #下划线命名与驼峰命名法的自动映射
     map-underscore-to-camel-case: true
-  mapper-locations:
+
 server:
   port: 8080
   servlet:

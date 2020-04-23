@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.management.mapper.WorDao">
+
+    <select id="findByPage" resultType="Wor">
+    select * from wor
+    limit #{start},#{rows}
+   </select>
+
+    <insert id="save">
+       insert into wor(questions,question,answer,bankId) values (#{questions},#{question},#{answer},#{bankId})
+    </insert>
+
+    <delete id="delete">
+        delete  from wor where id=#{id}
+    </delete>
+
+    <update id="update">
+     update wor set questions=#{questions},question=#{question},answer=#{answer},bankId=#{bankId} where id=#{id}
+    </update>
+
+    <select id="findByBankName">
+     select  * from wor where name=#{name}
+    </select>
+
+    <select id="findTotals" resultType="Integer">
+     select count(id) from wor
+    </select>
+
+    <select id="findOne" resultType="Wor">
+        select * from wor where id=#{id}
+    </select>
+
+
+</mapper>
