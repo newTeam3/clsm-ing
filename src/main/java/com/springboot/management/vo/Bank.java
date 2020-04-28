@@ -1,7 +1,7 @@
 package com.springboot.management.vo;
 
 
-public class Bank  {
+public class Bank {
     private  Integer id;
     private  String  name;
     private  String  explain1;
