@@ -28,5 +28,20 @@ server:
 logging:
   level:
     com: debug
+jwt:
+  #请求header所携带token的属性名
+  header: Authorization
+  #用户自定义的口令
+  secret: mySecret
+  #失效时间
+  expiration: 604800
+  #承载字符串
+  tokenHead: Bearer
+  route:
+    authentication:
+      #token授权url
+      path: /auth
+      #刷新token的url
+      refresh: /refresh
 
 
