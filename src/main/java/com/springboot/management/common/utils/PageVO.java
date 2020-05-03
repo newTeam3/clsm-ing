@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +22,7 @@ public class PageVO {
     private String sortBy;
     @ApiModelProperty("排序类型")
     private Boolean desc;
-    @ApiModelProperty("用户名的模糊查询")
-    private String key;
+    @ApiModelProperty("接收模糊查询得参数")
+    private Map<Object,Object> key=new HashMap<>();
+
 }

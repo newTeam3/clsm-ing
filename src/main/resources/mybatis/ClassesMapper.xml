@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.management.mapper.ClassesMapper">
+    <select id="findAll" parameterType="map" resultMap="classResult">
+        SELECT c.*,co.id as co_id,co.name as co_name,co.status as co_status FROM classes c,college co where c.cid=co.id
+        <if test="id != null and id !=''">
+            and c.id = #{id}
+        </if>
+        <if test="name != null and name !=''">
+            and c.name like concat("%",#{name},"%")
+        </if>
+    </select>
+    <!--注意：两个表中的字段如果相同的话，一定要给其中一个表字段的column取别名。如 上面查询语句中的co.id as co_id对应下面的column="co_id"-->
+    <resultMap type="classes" id="classResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="status" column="status"/>
+       <association property="college" javaType="college">
+           <id property="id" column="co_id"/>
+           <result property="status" column="co_status"/>
+           <result property="name" column="co_name"/>
+       </association>
+    </resultMap>
+
+    <select id="findAllCollege" resultType="college">
+        select * from college
+    </select>
+
+    <insert id="addClasses" parameterType="classes">
+        INSERT INTO classes (name, cid,status) VALUES ( #{name}, #{college.id},1)
+    </insert>
+
+    <update id="updateClasses" parameterType="classes">
+        UPDATE classes SET name=#{name},cid=#{college.id} where id=#{id}
+    </update>
+
+    <update id="banClasses" parameterType="classes">
+        UPDATE classes SET status=#{status} where id=#{id}
+    </update>
+
+    <update id="banRows" parameterType="list">
+        UPDATE classes SET status=0 where id in
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+               #{id}
+            </foreach>
+    </update>
+</mapper>

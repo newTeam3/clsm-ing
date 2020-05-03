@@ -15,7 +15,7 @@ spring:
 
 mybatis:
   #配置别名基础包
-  mapper-locations: classpath:mybatis/*Mapper.xml
+  mapper-locations: classpath:mybatis/*Mapper.xml,classpath*:/mappers/*.xml
   type-aliases-package: com.springboot.management.vo
   configuration:
     #下划线命名与驼峰命名法的自动映射
