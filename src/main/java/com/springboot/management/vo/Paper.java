@@ -3,10 +3,12 @@ package com.springboot.management.vo;
 
 
 public class Paper {
-    private  Integer id;
-    private  Integer score;
+    private  Integer  id;
+    private  Integer  score;
     private  String   time;
-    private  Integer bankId;
+    private  Integer  bankId;
+    private  String   name;
+    private  Integer  status;
 
 
     @Override
@@ -16,8 +18,27 @@ public class Paper {
                 ", score=" + score +
                 ", time='" + time + '\'' +
                 ", bankId=" + bankId +
+                ", name='" + name + '\'' +
+                ", status=" + status +
                 '}';
     }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
     public Integer getId() {
         return id;

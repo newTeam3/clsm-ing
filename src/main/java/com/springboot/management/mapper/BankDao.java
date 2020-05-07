@@ -15,9 +15,18 @@ public interface BankDao {
 
     Bank findByBankName(String name);
 
+    Bank findByBankName2(String name);
+
     List<Bank> findByPage(@Param("start") Integer start, @Param("rows") Integer rows);
+
+    List<Bank> findNameOrCount(@Param("start") Integer start, @Param("rows") Integer rows,Bank bank);
 
     Integer findTotals();
 
-    Bank findOne(String id);
+    Bank findOne(Integer id);
+
+    void updateStatus(Integer id,Integer status);
+
+    Integer totalsSelect(Bank bank);
+
 }

@@ -20,4 +20,6 @@ public interface UserMapper {
     })
     UserVO getUserByName(String username);
 
+
+    UserVO getUserName(String username);
 }

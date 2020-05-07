@@ -1,4 +1,5 @@
 package com.springboot.management.mapper;
+import com.springboot.management.vo.Bank;
 import com.springboot.management.vo.Wor;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +18,13 @@ public interface WorDao {
 
     List<Wor> findByPage(@Param("start") Integer start, @Param("rows") Integer rows);
 
+    List<Wor> findQuestionOrName(@Param("start") Integer start, @Param("rows") Integer rows,Wor wor);
+
     Integer findTotals();
 
-    Wor findOne(String id);
+    Wor findOne(Integer id);
+
+    void updateStatus(Integer id,Integer status);
+
+    Integer totalsSelect(Wor wor);
 }

@@ -3,6 +3,8 @@ package com.springboot.management.service.impl;
 import com.springboot.management.mapper.BankDao;
 import com.springboot.management.service.BankService;
 import com.springboot.management.vo.Bank;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void save(Bank bank) {
+        bank.setBankCount(0);
         bankDao.save(bank);
     }
 
@@ -45,8 +48,37 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Bank findOne(String id) {
+    public Bank findOne(Integer id) {
 
         return bankDao.findOne(id);
     }
+
+    @Override
+    public void updateStatus(Integer id, Integer status) {
+        bankDao.updateStatus(id,status);
+    }
+
+    @Override
+    public Bank findByBankName(String name) {
+
+        return bankDao.findByBankName(name);
+    }
+
+    @Override
+    public  Bank findByBankName2(String name) {
+         return bankDao.findByBankName2(name);
+    }
+
+    @Override
+    public List<Bank> findNameOrCount(Integer page, Integer rows,Bank bank) {
+        int start = (page-1)*rows;
+        return bankDao.findNameOrCount(start,rows,bank);
+    }
+
+    @Override
+    public Integer totalsSelect(Bank bank) {
+        return bankDao.totalsSelect(bank);
+    }
+
+
 }

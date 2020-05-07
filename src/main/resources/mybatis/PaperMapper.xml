@@ -5,7 +5,8 @@
 <mapper namespace="com.springboot.management.mapper.PaperDao">
 
     <select id="findByPage" resultType="Paper">
-    select * from paper
+    select paper.*,bank.name from paper,bank where paper.bankId=bank.id
+    order by time DESC
     limit #{start},#{rows}
    </select>
 
@@ -21,8 +22,8 @@
      update paper set score=#{score},time=#{time},bankId=#{bankId} where id=#{id}
     </update>
 
-    <select id="findById">
-     select  * from paper where id=#{id}
+    <select id="findByBankId" resultType="Paper">
+     select  * from paper where bankId=#{bankId}
     </select>
 
     <select id="findTotals" resultType="Integer">
@@ -30,8 +31,49 @@
     </select>
 
     <select id="findOne" resultType="Paper">
-        select * from paper where id=#{id}
+         select paper.*,bank.name from paper,bank where paper.bankId=bank.id and paper.id=#{paper.id}
     </select>
 
-
+    <update id="updateStatus">
+        update paper set
+        <if test="status==1">
+            status=0
+        </if>
+        <if test="status==0">
+            status=1
+        </if>
+        where id=#{id}
+    </update>
+    <select id="findTimeOrName" resultType="Paper" parameterType="Paper">
+                SELECT
+                    pr.*, bk. NAME
+                FROM
+                    paper pr,
+                    bank bk
+                WHERE
+                    pr.bankId = bk.id
+                    <if test="paper.time!=null">
+                        AND pr.time LIKE '%${paper.time}%'
+                    </if>
+                    <if test="paper.name!=null and paper.name!=''">
+                        AND bk. NAME LIKE '%${paper.name}%'
+                    </if>
+                limit #{start},#{rows}
+    </select>
+    <select id="totalsSelect"  resultType="Integer" parameterType="Paper">
+        select count(*) from ( SELECT
+        pr.*, bk. NAME
+        FROM
+        paper pr,
+        bank bk
+        WHERE
+        pr.bankId = bk.id
+        <if test="time!=null">
+            AND pr.time LIKE '%${time}%'
+        </if>
+        <if test="name!=null and name!=''">
+            AND bk. NAME LIKE '%${name}%'
+        </if>
+        )s
+    </select>
 </mapper>

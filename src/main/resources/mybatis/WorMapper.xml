@@ -5,33 +5,71 @@
 <mapper namespace="com.springboot.management.mapper.WorDao">
 
     <select id="findByPage" resultType="Wor">
-    select * from wor
+    select wor.* ,bank.name from wor,bank where bank.id=wor.bankId  order by bank.name DESC
     limit #{start},#{rows}
    </select>
 
     <insert id="save">
-       insert into wor(questions,question,answer,bankId) values (#{questions},#{question},#{answer},#{bankId})
+       insert into wor(questions,question,answer,bankId,optionA,optionB,optionC,optionD) values (#{questions},#{question},#{answer},#{bankId},#{optionA},#{optionB},#{optionC},#{optionD})
     </insert>
+
 
     <delete id="delete">
         delete  from wor where id=#{id}
     </delete>
 
     <update id="update">
-     update wor set questions=#{questions},question=#{question},answer=#{answer},bankId=#{bankId} where id=#{id}
+     update wor set questions=#{questions},question=#{question},answer=#{answer},bankId=#{bankId},optionA=#{optionA},optionB=#{optionB},optionC=#{optionC},optionD=#{optionD} where id=#{id}
     </update>
 
-    <select id="findByBankName">
-     select  * from wor where name=#{name}
+    <select id="findByQuestion" resultType="Wor">
+     select  * from wor where question=#{question}
     </select>
 
     <select id="findTotals" resultType="Integer">
      select count(id) from wor
     </select>
 
-    <select id="findOne" resultType="Wor">
-        select * from wor where id=#{id}
+    <select id="findOne"  resultType="Wor">
+
+     select wor.* ,bank.name from wor,bank where  bank.id=wor.bankId and wor.id=#{id}
     </select>
 
+    <update id="updateStatus">
+        update wor set
+        <if test="status==1">
+            status=0
+        </if>
+        <if test="status==0">
+            status=1
+        </if>
+        where id=#{id}
+    </update>
+    <select id="findQuestionOrName" resultType="Wor" parameterType="Wor">
+        select wr.* ,bk.name from wor wr,bank bk
+        <where>
+            bk.id=wr.bankId
+            <if test="wor.question!=null and wor.question!=''">
+                and wr.question like concat('%',#{wor.question},'%')
+            </if>
+            <if test="wor.name!=null and wor.name!=''">
+                and bk.name like concat('%',#{wor.name},'%')
+            </if>
+        </where>
+        limit #{start},#{rows}
+    </select>
 
+    <select id="totalsSelect"  resultType="Integer" parameterType="Wor">
+        select count(*) from (   select wr.* ,bk.name from wor wr,bank bk
+        <where>
+            bk.id=wr.bankId
+            <if test="question!=null and question!=''">
+                and question like concat('%',#{question},'%')
+            </if>
+            <if test="name!=null and name!=''">
+                and  bk.name like concat('%',#{name},'%')
+            </if>
+        </where>
+        )s
+    </select>
 </mapper>

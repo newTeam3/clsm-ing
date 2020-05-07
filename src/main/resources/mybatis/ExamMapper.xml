@@ -1,37 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-        <!DOCTYPE mapper
-                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.management.mapper.ExamDao">
 
-<select id="findByPage" resultType="Exam">
-    select * from exam  order by score DESC
+    <select id="findByPage" resultType="Exam">
+    SELECT exam.*,bank.name,user.username FROM user ,exam,bank WHERE user.id=exam.uid and exam.paperid=bank.id
     limit #{start},#{rows}
    </select>
 
-<insert id="save">
+    <insert id="save">
        insert into exam(uid,paperid,score) values (#{uid},#{paperid},#{score})
     </insert>
 
-<delete id="delete">
+    <delete id="delete">
         delete  from exam where id=#{id}
     </delete>
 
-<update id="update">
+    <update id="update">
      update exam set uid=#{uid},paperid=#{paperid},score=#{score} where id=#{id}
     </update>
 
-<select id="findById">
-     select  * from exam where id=#{id}
+    <select id="findByUIdAndPaperId" resultType="Exam">
+     select  * from exam where uid=#{uid} and paperid=#{paperid}
     </select>
 
-<select id="findTotals" resultType="Integer">
+    <select id="findTotals" resultType="Integer">
      select count(id) from exam
     </select>
 
-<select id="findOne" resultType="Exam">
-        select * from exam where id=#{id}
+    <select id="findOne" resultType="Exam">
+         SELECT exam.*,bank.name,user.username FROM user ,exam,bank WHERE user.id=exam.uid and bank.id=exam.paperid  and exam.id=#{id}
     </select>
 
+    <update id="updateStatus">
+        update exam set
+        <if test="status==1">
+            status=0
+        </if>
+        <if test="status==0">
+            status=1
+        </if>
+        where id=#{id}
+    </update>
 
+    <select id="findByNameOrScore" resultType="Exam" parameterType="Exam">
+            SELECT
+                em.*, bk.name,
+                us.username
+            FROM
+                user us,exam em,bank bk
+            WHERE
+            us.id = em.uid
+            AND em.paperid = bk.id
+            <if test="exam.username!=null and exam.username!=''">
+            AND us.username LIKE  '%${exam.username}%'
+            </if>
+            <if test="exam.score!=null">
+            AND em.score LIKE '%${exam.score}%'
+            </if>
+            limit #{start},#{rows}
+    </select>
+
+    <select id="totalsSelect"  resultType="Integer" parameterType="Exam">
+        select count(*) from ( SELECT
+        em.*, bk.name,
+        us.username
+        FROM
+        user us,exam em,bank bk
+        WHERE
+        us.id = em.uid
+        AND em.paperid = bk.id
+        <if test="username!=null and username!=''">
+            AND us.username LIKE  '%${username}%'
+        </if>
+        <if test="score!=null">
+            AND em.score LIKE '%${score}%'
+        </if>
+        )s
+    </select>
 </mapper>

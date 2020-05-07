@@ -21,10 +21,12 @@
      update bank set name=#{name},explain1=#{explain1},bankCount=#{bankCount} where id=#{id}
     </update>
 
-    <select id="findByBankName">
+    <select id="findByBankName" resultType="Bank">
      select  * from bank where name=#{name}
     </select>
-
+    <select id="findByBankName2" resultType="Bank">
+     select  * from bank where name like concat('%',#{name},'%')
+    </select>
     <select id="findTotals" resultType="Integer">
      select count(id) from bank
     </select>
@@ -33,5 +35,39 @@
         select * from bank where id=#{id}
     </select>
 
-
+    <update id="updateStatus">
+        update bank set
+        <if test="status==1">
+            status=0
+        </if>
+        <if test="status==0">
+            status=1
+        </if>
+        where id=#{id}
+    </update>
+    <select id="findNameOrCount" resultType="Bank" parameterType="Bank">
+        select * from bank
+        <where>
+        <if test="bank.name!=null and bank.name!=''">
+            and bank.name like concat('%',#{bank.name},'%')
+        </if>
+        <if test="bank.bankCount!=null">
+            and bank.bankCount like concat('%',#{bank.bankCount},'%')
+        </if>
+        </where>
+        order by bankCount DESC
+        limit #{start},#{rows}
+    </select>
+    <select id="totalsSelect"  resultType="Integer" parameterType="Bank">
+        select count(*) from (select * from bank
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="bankCount!=null">
+                and bankCount like concat('%',#{bankCount},'%')
+            </if>
+        </where>
+       )s
+    </select>
 </mapper>

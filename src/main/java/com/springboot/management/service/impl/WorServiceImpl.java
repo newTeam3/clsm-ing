@@ -1,5 +1,6 @@
 package com.springboot.management.service.impl;
 
+import com.springboot.management.mapper.BankDao;
 import com.springboot.management.mapper.WorDao;
 import com.springboot.management.service.BankService;
 import com.springboot.management.service.WorService;
@@ -17,27 +18,29 @@ public class WorServiceImpl implements WorService {
     @Autowired
     private WorDao worDao;
     @Autowired
-    private BankService bankService;
+    private BankDao bankDao;
     @Override
     public void save(Wor wor) {
+        wor.setBankId(bankDao.findByBankName(wor.getName()).getId());
         worDao.save(wor);
-        Bank bank = bankService.findOne(String.valueOf(wor.getBankId()));
+        Bank bank = bankDao.findOne(wor.getBankId());
         bank.setBankCount(bank.getBankCount()+1);
-        bankService.update(bank);
+        bankDao.update(bank);
 
     }
 
     @Override
     public void delete(String id) {
-        Wor wor = worDao.findOne(id);
-        Bank bank = bankService.findOne(String.valueOf(wor.getBankId()));
+        Wor wor = worDao.findOne(Integer.valueOf(id));
+        Bank bank = bankDao.findOne(wor.getBankId());
         bank.setBankCount(bank.getBankCount()-1);
-        bankService.update(bank);
+        bankDao.update(bank);
         worDao.delete(id);
     }
 
     @Override
     public void update(Wor wor) {
+        wor.setBankId(bankDao.findByBankName(wor.getName()).getId());
         worDao.update(wor);
     }
 
@@ -49,7 +52,35 @@ public class WorServiceImpl implements WorService {
     }
 
     @Override
+    public List<Wor> findQuestionOrName(Integer page, Integer rows, Wor wor) {
+        int start = (page-1)*rows;
+        return worDao.findQuestionOrName(start,rows,wor);
+    }
+
+    @Override
     public Integer findTotals() {
         return worDao.findTotals();
+    }
+
+    @Override
+    public Wor findByQuestion(String question) {
+        return worDao.findByQuestion(question);
+    }
+
+    @Override
+    public Wor findOne(Integer id) {
+
+        return worDao.findOne(id);
+    }
+
+    @Override
+    public void updateStatus(Integer id, Integer status) {
+        worDao.updateStatus(id,status);
+    }
+
+
+    @Override
+    public Integer totalsSelect(Wor wor) {
+        return worDao.totalsSelect(wor);
     }
 }
