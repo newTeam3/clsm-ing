@@ -18,6 +18,8 @@ public class UserVO {
     private String username;
     //密码
     private String password;
+    //姓名
+    private String name;
     //电话号码
     private String phone;
     //创建时间

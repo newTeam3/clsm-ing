@@ -5,23 +5,21 @@ import com.github.pagehelper.PageInfo;
 import com.springboot.management.common.enums.ExceptionEnum;
 import com.springboot.management.common.exception.MyException;
 import com.springboot.management.common.utils.PageVO;
-import com.springboot.management.mapper.ClassesMapper;
-import com.springboot.management.service.ClassesService;
+import com.springboot.management.mapper.CollegeMapper;
+import com.springboot.management.service.CollegeService;
 import com.springboot.management.vo.Classes;
 import com.springboot.management.vo.College;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
-public class ClassesServiceImpl implements ClassesService {
+public class CollegeServiceImpl implements CollegeService {
     @Autowired
-    ClassesMapper classesMapper;
+    CollegeMapper collegeMapper;
 
     @Override
     public PageInfo findAll(PageVO pageVO) {
@@ -31,37 +29,30 @@ public class ClassesServiceImpl implements ClassesService {
 //        map.put("id",pageVO.getKey().get("id"));
 //        map.put("name",pageVO.getKey().get("name"));
         //System.out.println("这是impl"+map);
-        List<Classes> list = classesMapper.findAll(pageVO.getKey());
-//        System.out.println("这是service里的"+list);
+        List<College> list = collegeMapper.findAll(pageVO.getKey());
         PageInfo info = new PageInfo(list);
         return info;
     }
 
     @Override
-    public List<College> findAllCollege() {
-        return classesMapper.findAllCollege();
-    }
-
-    @Override
-    public void addClasses(Classes classes) {
-        int i = classesMapper.addClasses(classes);
-        if (i==0){
-            throw new MyException(ExceptionEnum.SERVER_CONGESTION);
-        }
-
-    }
-
-    @Override
-    public void updateClasses(Classes classes) {
-        int i = classesMapper.updateClasses(classes);
+    public void addCollege(College college) {
+        int i = collegeMapper.addCollege(college);
         if (i==0){
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }
     }
 
     @Override
-    public void banClasses(Classes classes) {
-        int i = classesMapper.banClasses(classes);
+    public void updateCollege(College college) {
+        int i = collegeMapper.updateCollege(college);
+        if (i==0){
+            throw new MyException(ExceptionEnum.SERVER_CONGESTION);
+        }
+    }
+
+    @Override
+    public void banCollege(College college) {
+        int i = collegeMapper.banCollege(college);
         if (i==0){
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }
@@ -69,7 +60,7 @@ public class ClassesServiceImpl implements ClassesService {
 
     @Override
     public void banRows(List list) {
-        int i = classesMapper.banRows(list);
+        int i = collegeMapper.banRows(list);
         if (i==0){
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }

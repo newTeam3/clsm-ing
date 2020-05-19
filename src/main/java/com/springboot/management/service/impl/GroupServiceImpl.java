@@ -5,23 +5,20 @@ import com.github.pagehelper.PageInfo;
 import com.springboot.management.common.enums.ExceptionEnum;
 import com.springboot.management.common.exception.MyException;
 import com.springboot.management.common.utils.PageVO;
-import com.springboot.management.mapper.ClassesMapper;
-import com.springboot.management.service.ClassesService;
-import com.springboot.management.vo.Classes;
-import com.springboot.management.vo.College;
+import com.springboot.management.mapper.GroupMapper;
+import com.springboot.management.service.GroupService;
+import com.springboot.management.vo.Groups;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
-public class ClassesServiceImpl implements ClassesService {
+public class GroupServiceImpl implements GroupService {
     @Autowired
-    ClassesMapper classesMapper;
+    GroupMapper groupMapper;
 
     @Override
     public PageInfo findAll(PageVO pageVO) {
@@ -31,37 +28,30 @@ public class ClassesServiceImpl implements ClassesService {
 //        map.put("id",pageVO.getKey().get("id"));
 //        map.put("name",pageVO.getKey().get("name"));
         //System.out.println("这是impl"+map);
-        List<Classes> list = classesMapper.findAll(pageVO.getKey());
-//        System.out.println("这是service里的"+list);
+        List<Groups> list = groupMapper.findAll(pageVO.getKey());
         PageInfo info = new PageInfo(list);
         return info;
     }
 
     @Override
-    public List<College> findAllCollege() {
-        return classesMapper.findAllCollege();
-    }
-
-    @Override
-    public void addClasses(Classes classes) {
-        int i = classesMapper.addClasses(classes);
-        if (i==0){
-            throw new MyException(ExceptionEnum.SERVER_CONGESTION);
-        }
-
-    }
-
-    @Override
-    public void updateClasses(Classes classes) {
-        int i = classesMapper.updateClasses(classes);
+    public void addGroup(Groups groups) {
+        int i = groupMapper.addGroup(groups);
         if (i==0){
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }
     }
 
     @Override
-    public void banClasses(Classes classes) {
-        int i = classesMapper.banClasses(classes);
+    public void updateGroup(Groups groups) {
+        int i = groupMapper.updateGroup(groups);
+        if (i==0){
+            throw new MyException(ExceptionEnum.SERVER_CONGESTION);
+        }
+    }
+
+    @Override
+    public void banGroup(Groups groups) {
+        int i = groupMapper.banGroup(groups);
         if (i==0){
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }
@@ -69,7 +59,7 @@ public class ClassesServiceImpl implements ClassesService {
 
     @Override
     public void banRows(List list) {
-        int i = classesMapper.banRows(list);
+        int i = groupMapper.banRows(list);
         if (i==0){
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.management.mapper.GroupMapper">
+    <select id="findAll" parameterType="map" resultType="groups">
+        select * from groups
+        <where>
+            <if test="id != null and id !=''">
+                and id = #{id}
+            </if>
+            <if test="name != null and name !=''">
+                and name like concat("%",#{name},"%")
+            </if>
+        </where>
+    </select>
+
+    <insert id="addGroup" parameterType="groups">
+        INSERT INTO groups (name, remark,status) VALUES ( #{name}, #{remark},1)
+    </insert>
+
+    <update id="updateGroup" parameterType="groups">
+        UPDATE groups SET name=#{name},remark=#{remark} where id=#{id}
+    </update>
+
+    <update id="banGroup" parameterType="groups">
+        UPDATE groups SET status=#{status} where id=#{id}
+    </update>
+
+    <update id="banRows" parameterType="list">
+        UPDATE groups SET status=0 where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

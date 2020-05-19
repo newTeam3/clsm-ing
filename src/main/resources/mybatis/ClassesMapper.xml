@@ -11,6 +11,10 @@
         <if test="name != null and name !=''">
             and c.name like concat("%",#{name},"%")
         </if>
+        <if test="cid != null and cid !=''">
+            and c.cid = #{cid}
+        </if>
+        order by c.cid
     </select>
     <!--注意：两个表中的字段如果相同的话，一定要给其中一个表字段的column取别名。如 上面查询语句中的co.id as co_id对应下面的column="co_id"-->
     <resultMap type="classes" id="classResult">
@@ -25,7 +29,7 @@
     </resultMap>
 
     <select id="findAllCollege" resultType="college">
-        select * from college
+        select * from college where status = 1
     </select>
 
     <insert id="addClasses" parameterType="classes">

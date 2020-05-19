@@ -20,14 +20,14 @@ public class ClassesController {
     @Autowired
     private ClassesService classesService;
     //分页查询班级信息
-    @ResponseBody
     @PostMapping(value = "/findAll")
     public ResponseEntity<?> findAll(@RequestBody PageVO pageVO) {
+        System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = classesService.findAll(pageVO);
+        System.out.println("这是pageinfo"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
     //查询所有学院
-    @ResponseBody
     @PostMapping(value = "/findAllCollege")
     public ResponseEntity<?> findAllCollege() {
         List<College> list=classesService.findAllCollege();
@@ -35,7 +35,6 @@ public class ClassesController {
         return ResponseEntity.ok(list);
     }
     //添加班级信息
-    @ResponseBody
     @PostMapping(value = "/addClasses")
     public ResponseEntity<?> addClasses(@RequestBody Classes classes) {
         classesService.addClasses(classes);
@@ -43,7 +42,6 @@ public class ClassesController {
         return ResponseEntity.ok("操作成功");
     }
     //修改班级信息
-    @ResponseBody
     @PostMapping(value = "/updateClasses")
     public ResponseEntity<?> updateClasses(@RequestBody Classes classes) {
         classesService.updateClasses(classes);
@@ -51,14 +49,12 @@ public class ClassesController {
         return ResponseEntity.ok("操作成功");
     }
     //单个班级的启用及禁用
-    @ResponseBody
     @PostMapping(value = "/banClasses")
     public ResponseEntity<?> banClasses(@RequestBody Classes classes) {
         classesService.banClasses(classes);
         return ResponseEntity.ok("操作成功");
     }
     //批量禁用班级
-    @ResponseBody
     @GetMapping(value = "/banRows")
     public ResponseEntity<?> banRows(@RequestParam(value = "ids") String ids) {
         List<String> list = Arrays.asList(ids.split(","));
@@ -66,5 +62,6 @@ public class ClassesController {
         System.out.println("这是list" + list);
         return ResponseEntity.ok("操作成功");
     }
+
 
 }
