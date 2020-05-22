@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.management.mapper.TaskMapper">
+    <select id="findAll" parameterType="map" resultMap="noticeResult">
+        select n.*,u.id as u_id,u.name as u_name from notice n,user u where n.uid=u.id
+            <if test="content != null and content !=''">
+                and n.content like concat("%",#{content},"%")
+            </if>
+            <if test="name != null and name !=''">
+                and u.name like concat("%",#{name},"%")
+            </if>
+        order by time desc
+    </select>
+
+    <resultMap id="noticeResult" type="notice">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="time" column="time"/>
+        <result property="status" column="status"/>
+        <association property="userVO" javaType="userVO">
+            <id property="id" column="u_id"/>
+            <result property="name" column="u_name"/>
+        </association>
+    </resultMap>
+
+    <insert id="addNotice" parameterType="notice">
+        INSERT INTO notice (uid, content,time,status) VALUES ( #{userVO.id}, #{content},#{time},1)
+    </insert>
+
+    <update id="updateNotice" parameterType="notice">
+        UPDATE notice SET content=#{content},time=#{time} where id=#{id}
+    </update>
+
+    <update id="banNotice" parameterType="notice">
+        UPDATE notice SET status=#{status} where id=#{id}
+    </update>
+
+    <update id="banRows" parameterType="list">
+        UPDATE notice SET status=0 where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="findAllTask" parameterType="map" resultMap="TaskResult">
+        select t.*,u.id as u_id,u.name as u_name from task t,user u where t.uid=u.id
+        <if test="content != null and content !=''">
+            and t.content like concat("%",#{content},"%")
+        </if>
+        <if test="name != null and name !=''">
+            and u.name like concat("%",#{name},"%")
+        </if>
+        order by createTime desc
+    </select>
+
+    <resultMap id="TaskResult" type="task">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="createTime"/>
+        <result property="deadline" column="deadline"/>
+        <result property="status" column="status"/>
+        <result property="sort" column="sort"/>
+        <result property="count" column="count"/>
+        <association property="userVO" javaType="userVO">
+            <id property="id" column="u_id"/>
+            <result property="name" column="u_name"/>
+        </association>
+    </resultMap>
+
+    <insert id="addTask" parameterType="task">
+        INSERT INTO task (uid, content,createTime,deadline,status,sort,count) VALUES ( #{userVO.id}, #{content},#{createTime},#{deadline},1,#{sort},0)
+    </insert>
+
+    <update id="updateTask" parameterType="task">
+        UPDATE task SET content=#{content},deadline=#{deadline},sort=#{sort} where id=#{id}
+    </update>
+
+    <update id="banTask" parameterType="task">
+        UPDATE task SET status=#{status} where id=#{id}
+    </update>
+
+    <update id="banTaskRows" parameterType="list">
+        UPDATE task SET status=0 where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="committed" parameterType="int" resultType="userVO">
+        select id,name from user where id  in (select uid from message where tid=#{id})
+    </select>
+
+    <select id="uncommitted" parameterType="int" resultType="userVO">
+        select id,name from user where id not in (select uid from message where tid=#{id})
+    </select>
+
+    <select id="checkTask" parameterType="int" resultType="message">
+        select * from message where uid=#{uid} and tid=#{tid}
+    </select>
+</mapper>

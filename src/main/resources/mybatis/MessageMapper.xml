@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.management.mapper.MessageMapper">
+    <select id="findAll" parameterType="map" resultMap="messageResult">
+        SELECT m.*,u.id as u_id,u.name as u_name,t.id as t_id,t.content as t_content FROM message m,user u,task t where m.uid=u.id and m.tid=t.id and t.sort=0
+
+         <if test="state != null">
+            and m.state=#{state}
+        </if>
+        <if test="id != null and id !=''">
+            and t.id = #{id}
+        </if>
+        order by time desc
+    </select>
+    <!--注意：两个表中的字段如果相同的话，一定要给其中一个表字段的column取别名。如 上面查询语句中的co.id as co_id对应下面的column="co_id"-->
+    <resultMap type="message" id="messageResult">
+        <id property="id" column="id"/>
+        <result property="time" column="time"/>
+        <result property="work" column="work"/>
+        <result property="problem" column="problem"/>
+        <result property="solve" column="solve"/>
+        <result property="summary" column="summary"/>
+        <result property="plan" column="plan"/>
+        <result property="status" column="status"/>
+        <result property="state" column="state"/>
+        <association property="userVO" javaType="userVO">
+            <id property="id" column="u_id"/>
+            <result property="name" column="u_name"/>
+        </association>
+        <association property="task" javaType="task">
+            <id property="id" column="t_id"/>
+            <result property="content" column="t_content"/>
+        </association>
+    </resultMap>
+
+    <insert id="evaluate" parameterType="evaluate">
+        INSERT INTO evaluate (content, time,uid,mid,status) VALUES ( #{content}, #{time},#{userVO.id},#{message.id},1)
+    </insert>
+
+    <update id="changeState" parameterType="int">
+        UPDATE message SET state=#{state} where id=#{id}
+    </update>
+
+    <select id="findEvaluateByMid" parameterType="int" resultMap="evaluateResult">
+        select e.*,u.id as u_id,u.name as u_name from evaluate e,user u where e.uid=u.id and mid=#{mid} order by time desc
+    </select>
+
+    <resultMap id="evaluateResult" type="evaluate">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="time" column="time"/>
+        <result property="status" column="status"/>
+        <association property="userVO" javaType="userVO">
+            <id property="id" column="u_id"/>
+            <result property="name" column="u_name"/>
+        </association>
+    </resultMap>
+
+    <update id="banMessage" parameterType="message">
+        UPDATE message SET status=#{status} where id=#{id}
+    </update>
+
+    <update id="banMessageRows" parameterType="list">
+        UPDATE message SET status=0 where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="getContentAll" parameterType="int" resultType="task">
+        select * from task where sort=#{sort} order by createTime desc
+    </select>
+
+    <select id="findAllWeekReport" parameterType="map" resultMap="messageResult">
+        SELECT m.*,u.id as u_id,u.name as u_name,t.id as t_id,t.content as t_content FROM message m,user u,task t where m.uid=u.id and m.tid=t.id and t.sort=1
+
+        <if test="state != null">
+            and m.state=#{state}
+        </if>
+        <if test="id != null and id !=''">
+            and t.id = #{id}
+        </if>
+        order by time desc
+    </select>
+
+    <insert id="commit" parameterType="message">
+        INSERT INTO message (time, work,problem,solve,summary,plan,uid,tid,status,state) VALUES ( #{time}, #{work}, #{problem},#{solve},#{summary},#{plan},#{userVO.id},#{task.id},1,0)
+    </insert>
+
+    <update id="addCount" parameterType="int">
+        UPDATE task SET count=count+1 where id=#{id}
+    </update>
+
+
+
+</mapper>

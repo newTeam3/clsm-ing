@@ -13,6 +13,8 @@ spring:
     serialization:
       indent_output: true
 
+
+
 mybatis:
   #配置别名基础包
   mapper-locations: classpath:mybatis/*Mapper.xml,classpath*:/mappers/*.xml
@@ -43,5 +45,10 @@ jwt:
       path: /auth
       #刷新token的url
       refresh: /refresh
+
+absoluteImgPath: F://localimg/
+sonImgPath: /images/
+
+
 
 

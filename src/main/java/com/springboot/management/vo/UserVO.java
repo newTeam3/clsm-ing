@@ -28,6 +28,11 @@ public class UserVO {
     private Date lastPasswordResetDate;
     //用户状态
     private int status;
+    //性别
+    private int sex;
+
+    private String img;
+
     //班级id
     private int cid;
     //职称id
@@ -43,5 +48,4 @@ public class UserVO {
     private String coidName;
 
     private List<RoleVO> roles;
-
 }

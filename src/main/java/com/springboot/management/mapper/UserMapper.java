@@ -17,6 +17,7 @@ public interface UserMapper {
            @Result(property = "created",column = "created"),
            @Result(property = "status",column = "status"),
            @Result(property = "name",column = "name"),
+            @Result(property = "img",column = "img"),
            @Result(property = "roles",column = "id",javaType = List.class,many = @Many(select = "com.springboot.management.mapper.RoleMapper.findRoleByUserId"))
     })
     UserVO getUserByName(String username);

@@ -24,11 +24,6 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public PageInfo findAll(PageVO pageVO) {
         PageHelper.startPage(pageVO.getPage(), pageVO.getRows());
-        //查询
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("id",pageVO.getKey().get("id"));
-//        map.put("name",pageVO.getKey().get("name"));
-        //System.out.println("这是impl"+map);
         List<Position> list = positionMapper.findAll(pageVO.getKey());
         PageInfo info = new PageInfo(list);
         return info;
