@@ -5,10 +5,9 @@ public class Exam {
     private  Integer  uid;
     private  String   username;
     private  Integer  paperid;
-    private  String   name;
-    private  Integer  score;
+    private  String   paperName;
+    private  Float  score;
     private  Integer  status;
-
 
     @Override
     public String toString() {
@@ -17,18 +16,18 @@ public class Exam {
                 ", uid=" + uid +
                 ", username='" + username + '\'' +
                 ", paperid=" + paperid +
-                ", name='" + name + '\'' +
+                ", paperName='" + paperName + '\'' +
                 ", score=" + score +
                 ", status=" + status +
                 '}';
     }
 
-    public String getName() {
-        return name;
+    public String getPaperName() {
+        return paperName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
     }
 
     public String getUsername() {
@@ -71,11 +70,11 @@ public class Exam {
         this.paperid = paperid;
     }
 
-    public Integer getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 }

@@ -10,7 +10,7 @@
    </select>
 
     <insert id="save">
-       insert into wor(questions,question,answer,bankId,optionA,optionB,optionC,optionD) values (#{questions},#{question},#{answer},#{bankId},#{optionA},#{optionB},#{optionC},#{optionD})
+       insert into wor(questions,question,answer,bankId,optionA,optionB,optionC,optionD,number) values (#{questions},#{question},#{answer},#{bankId},#{optionA},#{optionB},#{optionC},#{optionD},#{number})
     </insert>
 
 
@@ -72,4 +72,14 @@
         </where>
         )s
     </select>
+
+    <select id="findTotalsByBankId" resultType="Integer">
+    select count(id) from wor where wor.bankId=#{bankId}
+    </select>
+
+    <select id="findByNumber"  resultType="Wor">
+     select wor.* ,bank.name from wor,bank where  bank.id=wor.bankId and wor.number=#{number} and wor.bankId=#{bankId}
+    </select>
+
+
 </mapper>

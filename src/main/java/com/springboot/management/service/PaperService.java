@@ -21,6 +21,8 @@ public interface PaperService {
 
     Paper findByBankId(Integer bankId);
 
+    Paper findByPaperName(String  paperName);
+
     Paper findOne(Integer id);
 
     void updateStatus(Integer id,Integer status);

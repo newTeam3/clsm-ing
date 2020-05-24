@@ -4,23 +4,51 @@ package com.springboot.management.vo;
 
 public class Paper {
     private  Integer  id;
-    private  Integer  score;
+    private  Integer  TotalScore;
     private  String   time;
     private  Integer  bankId;
     private  String   name;
+    private  String   paperNum;
     private  Integer  status;
+    private  String   paperName;
 
 
     @Override
     public String toString() {
         return "Paper{" +
                 "id=" + id +
-                ", score=" + score +
+                ", TotalScore=" + TotalScore +
                 ", time='" + time + '\'' +
                 ", bankId=" + bankId +
                 ", name='" + name + '\'' +
+                ", paperNum='" + paperNum + '\'' +
                 ", status=" + status +
+                ", paperName='" + paperName + '\'' +
                 '}';
+    }
+
+    public String getPaperName() {
+        return paperName;
+    }
+
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
+    }
+
+    public Integer getTotalScore() {
+        return TotalScore;
+    }
+
+    public void setTotalScore(Integer totalScore) {
+        TotalScore = totalScore;
+    }
+
+    public String getPaperNum() {
+        return paperNum;
+    }
+
+    public void setPaperNum(String paperNum) {
+        this.paperNum = paperNum;
     }
 
     public Integer getStatus() {
@@ -46,14 +74,6 @@ public class Paper {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
     }
 
     public String getTime() {

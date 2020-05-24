@@ -49,6 +49,10 @@ public class WorController {
     public String save(@RequestBody Wor wor) {
 //        log.info("收到的" + wor);
         Wor wor1 = worService.findByQuestion(wor.getQuestion());
+        Bank byBankName = bankService.findByBankName(wor.getName());
+        if (byBankName == null) {
+            return "fail_fail";
+        }
         if (wor1 == null) {
             try {
                 worService.save(wor);
@@ -84,12 +88,17 @@ public class WorController {
     //修改
     @PostMapping("/update")
     public String update(@RequestBody Wor wor) {
-        try {
-            worService.update(wor);
-            return "success";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "fail";
+        Bank byBankName = bankService.findByBankName(wor.getName());
+        if (byBankName == null) {
+            return "fail1";
+        } else {
+            try {
+                worService.update(wor);
+                return "success";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "fail";
+            }
         }
     }
 
@@ -103,8 +112,9 @@ public class WorController {
             return "fail";
         }
     }
+
     @PostMapping("/findQuestionOrName")
-    public Map<String, Object> findQuestionOrName(@RequestParam(value = "page",required = false ,defaultValue = "1") Integer page, Integer rows, @RequestBody Wor wor) {
+    public Map<String, Object> findQuestionOrName(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,  @RequestParam(value = "size",required = false ,defaultValue = "4") Integer rows, @RequestBody Wor wor) {
 //        wor.setBankId(bankDao.findByBankName(wor.getName()).getId());
         log.info("收到wor" + wor);
         log.info("收到page" + page);
@@ -112,7 +122,7 @@ public class WorController {
         rows = rows == null ? 4 : rows;
         HashMap<String, Object> map = new HashMap<>();
         //分页处理
-        List<Wor> wors = worService.findQuestionOrName(page, rows,wor);
+        List<Wor> wors = worService.findQuestionOrName(page, rows, wor);
         Integer totals = worService.totalsSelect(wor);
         Integer totalPage = totals % rows == 0 ? totals / rows : totals / rows + 1;
         map.put("wors", wors);

@@ -12,11 +12,8 @@ public class Wor {
     private  String  optionB;
     private  String  optionC;
     private  String  optionD;
+    private  Integer number;
     private  Wor  wor;
-
-    public Wor getWor() {
-        return wor;
-    }
 
     @Override
     public String toString() {
@@ -32,7 +29,21 @@ public class Wor {
                 ", optionB='" + optionB + '\'' +
                 ", optionC='" + optionC + '\'' +
                 ", optionD='" + optionD + '\'' +
+                ", number=" + number +
+                ", wor=" + wor +
                 '}';
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Wor getWor() {
+        return wor;
     }
 
     public String getOptionA() {

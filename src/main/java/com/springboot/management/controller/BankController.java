@@ -95,7 +95,7 @@ public class BankController {
     }
     //根据关键字
     @PostMapping("/findNameOrCount")
-    public Map<String, Object> findNameOrCount(@RequestParam(value = "page",required = false ,defaultValue = "1") Integer page, Integer rows, @RequestBody Bank bank) {
+    public Map<String, Object> findNameOrCount(@RequestParam(value = "page",required = false ,defaultValue = "1") Integer page, @RequestParam(value = "size",required = false ,defaultValue = "4") Integer rows, @RequestBody Bank bank) {
         log.info("收到的bank" + bank);
         log.info("page" + page);
         page = page == null ? 1 : page;

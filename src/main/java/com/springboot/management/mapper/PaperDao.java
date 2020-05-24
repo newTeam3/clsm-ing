@@ -24,6 +24,8 @@ public interface PaperDao {
 
     Paper findByBankId(Integer bankId);
 
+    Paper findByPaperName(String  paperName);
+
     void updateStatus(Integer id,Integer status);
 
     Integer totalsSelect(Paper paper);

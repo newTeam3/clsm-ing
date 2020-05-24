@@ -1,11 +1,10 @@
 package com.springboot.management.controller;
 
 import com.springboot.management.mapper.BankDao;
+import com.springboot.management.mapper.PaperDao;
 import com.springboot.management.mapper.UserMapper;
 import com.springboot.management.service.ExamService;
-import com.springboot.management.vo.Bank;
-import com.springboot.management.vo.Exam;
-import com.springboot.management.vo.Wor;
+import com.springboot.management.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +20,23 @@ public class ExamController {
     @Autowired
     private ExamService examService;
     @Autowired
-    private BankDao bankDao;
+    private PaperDao paperDao;
     @Autowired
     private UserMapper userMapper;
 
 
     @GetMapping("/findAllExam")
-    public Map<String, Object> findBuPage(Integer page, Integer rows) {
+    public Map<String, Object> findBuPage( @RequestParam(value = "page",required = false ,defaultValue = "1") Integer page,@RequestParam(value = "size",required = false ,defaultValue = "4") Integer rows,@RequestParam(value = "username") String username,@RequestParam(value = "name") String name) {
+        log.info("收到的" + page);
+        log.info("收到的" + username);
+        log.info("收到的" + name);
         page = page == null ? 1 : page;
         rows = rows == null ? 4 : rows;
         HashMap<String, Object> map = new HashMap<>();
         //分页处理
-        List<Exam> exams = examService.findByPage(page, rows);
-        Integer totals = examService.findTotals();
+        List<Exam> exams = examService.findByPage(page, rows,name);
+        UserVO userByName = userMapper.getUserByName(username);
+        Integer totals = examService.findTotals(userByName.getId());
         Integer totalPage = totals % rows == 0 ? totals / rows : totals / rows + 1;
         map.put("exams", exams);
         map.put("totals", totals);
@@ -45,11 +48,17 @@ public class ExamController {
     @PostMapping("/save")
     public String save(@RequestBody Exam exam) {
 //        log.info("收到的" + exam);
-        exam.setPaperid(bankDao.findByBankName(exam.getName()).getId());
-        exam.setUid(userMapper.getUserByName(exam.getUsername()).getId());
-        Exam uIdAndPaperId = examService.findByUIdAndPaperId(exam.getUid(), exam.getPaperid());
+        Paper byBankName = paperDao.findByPaperName(exam.getPaperName());
+        UserVO userByName = userMapper.getUserByName(exam.getUsername());
+        Exam uIdAndPaperId = examService.findByUIdAndPaperId(userByName.getId(), byBankName.getId());
 //        log.info("收到的" + uIdAndPaperId);
-        if (uIdAndPaperId== null) {
+         if (byBankName==null){
+             return "fail1";
+         }else if (userByName==null){
+            return "fail2";
+        }else if (uIdAndPaperId== null) {
+             exam.setPaperid(byBankName.getId());
+             exam.setUid(userByName.getId());
             try {
                 examService.save(exam);
                 return "success";
@@ -95,8 +104,8 @@ public class ExamController {
     }
     //根据关键字
     @PostMapping("/findByNameOrScore")
-    public Map<String, Object> findByNameOrScore(@RequestParam(value = "page",required = false ,defaultValue = "1") Integer page, Integer rows, @RequestBody Exam exam) {
-        log.info("收到的exam" + exam);
+    public Map<String, Object> findByNameOrScore(@RequestParam(value = "page",required = false ,defaultValue = "1") Integer page, @RequestParam(value = "size",required = false ,defaultValue = "4") Integer rows, @RequestBody Exam exam) {
+//        log.info("收到的exam" + exam);
         log.info("page" + page);
         page = page == null ? 1 : page;
         rows = rows == null ? 4 : rows;

@@ -1,9 +1,6 @@
 package com.springboot.management.service.impl;
 
-import com.springboot.management.mapper.BankDao;
-import com.springboot.management.mapper.ExamDao;
-import com.springboot.management.mapper.UserMapper;
-import com.springboot.management.mapper.WorDao;
+import com.springboot.management.mapper.*;
 import com.springboot.management.service.ExamService;
 import com.springboot.management.vo.Exam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +15,14 @@ public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamDao examDao;
     @Autowired
-    private BankDao bankDao;
+    private PaperDao paperDao;
     @Autowired
     private UserMapper userMapper;
 
     @Override
     public void save(Exam exam) {
 
-        exam.setPaperid(bankDao.findByBankName(exam.getName()).getId());
+        exam.setPaperid(paperDao.findByPaperName(exam.getPaperName()).getId());
         exam.setUid(userMapper.getUserByName(exam.getUsername()).getId());
         examDao.save(exam);
     }
@@ -37,15 +34,15 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public void update(Exam exam) {
-        exam.setPaperid(bankDao.findByBankName(exam.getName()).getId());
+        exam.setPaperid(paperDao.findByPaperName(exam.getPaperName()).getId());
         exam.setUid(userMapper.getUserByName(exam.getUsername()).getId());
         examDao.update(exam);
     }
 
     @Override
-    public List<Exam> findByPage(Integer page, Integer rows) {
+    public List<Exam> findByPage(Integer page, Integer rows,String username) {
         int start = (page-1)*rows;
-        return examDao.findByPage(start,rows);
+        return examDao.findByPage(start,rows,username);
     }
 
     @Override
@@ -55,8 +52,9 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Integer findTotals() {
-        return examDao.findTotals();
+    public Integer findTotals(Integer uid) {
+
+        return examDao.findTotals(uid);
     }
 
     @Override

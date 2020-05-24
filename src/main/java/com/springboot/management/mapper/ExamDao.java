@@ -16,11 +16,11 @@ public interface ExamDao {
 
     Exam findByUIdAndPaperId(Integer uid,Integer paperid);
 
-    List<Exam> findByPage(@Param("start") Integer start, @Param("rows") Integer rows);
+    List<Exam> findByPage(@Param("start") Integer start, @Param("rows") Integer rows,String username);
 
     List<Exam> findByNameOrScore(@Param("start") Integer start, @Param("rows") Integer rows, Exam exam);
 
-    Integer findTotals();
+    Integer findTotals(Integer uid);
 
     Exam findOne(Integer id);
 

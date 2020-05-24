@@ -11,11 +11,11 @@ public interface ExamService {
 
     void update(Exam exam);
 
-    List<Exam> findByPage(Integer page, Integer rows);
+    List<Exam> findByPage(Integer page, Integer rows,String username);
 
     List<Exam> findByNameOrScore(Integer page, Integer rows,Exam exam);
 
-    Integer findTotals();
+    Integer findTotals(Integer uid);
 
     Exam findByUIdAndPaperId(Integer uid,Integer paperid);
 

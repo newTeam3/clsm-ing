@@ -11,7 +11,7 @@
    </select>
 
     <insert id="save">
-       insert into paper (score,time,bankId) values (#{score},#{time},#{bankId})
+       insert into paper (TotalScore,time,bankId,paperNum,paperName) values (#{TotalScore},#{time},#{bankId},#{paperNum},#{paperName})
     </insert>
 
     <delete id="delete">
@@ -19,11 +19,15 @@
     </delete>
 
     <update id="update">
-     update paper set score=#{score},time=#{time},bankId=#{bankId} where id=#{id}
+     update paper set TotalScore=#{TotalScore},time=#{time},bankId=#{bankId},paperNum=#{paperNum},paperName=#{paperName} where id=#{id}
     </update>
 
     <select id="findByBankId" resultType="Paper">
      select  * from paper where bankId=#{bankId}
+    </select>
+
+    <select id="findByPaperName" resultType="Paper">
+     select  * from paper where paperName=#{paperName}
     </select>
 
     <select id="findTotals" resultType="Integer">

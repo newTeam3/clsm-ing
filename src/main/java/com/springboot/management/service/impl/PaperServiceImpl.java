@@ -1,10 +1,12 @@
 package com.springboot.management.service.impl;
 
+import com.springboot.management.config.Dasdas;
 import com.springboot.management.mapper.BankDao;
 import com.springboot.management.mapper.PaperDao;
 import com.springboot.management.service.PaperService;
 import com.springboot.management.vo.Bank;
 import com.springboot.management.vo.Paper;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +20,15 @@ public class PaperServiceImpl implements PaperService {
     private PaperDao paperDao;
     @Autowired
     private BankDao bankDao;
+    @Autowired
+    private Dasdas dasdas;
     @Override
     public void save(Paper paper) {
-        paper.setBankId(bankDao.findByBankName(paper.getName()).getId());
+        Bank byBankName = bankDao.findByBankName(paper.getName());
+        paper.setBankId(byBankName.getId());
+        Integer totals = byBankName.getBankCount();
+        String random = dasdas.random(totals);
+        paper.setPaperNum(random);
         paperDao.save(paper);
     }
 
@@ -38,6 +46,7 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public List<Paper> findByPage(Integer page, Integer rows) {
+
         int start = (page-1)*rows;
         return paperDao.findByPage(start,rows);
     }
@@ -58,6 +67,11 @@ public class PaperServiceImpl implements PaperService {
     public Paper findByBankId(Integer bankId) {
 
         return paperDao.findByBankId(bankId);
+    }
+
+    @Override
+    public Paper findByPaperName(String paperName) {
+        return paperDao.findByPaperName(paperName);
     }
 
     @Override

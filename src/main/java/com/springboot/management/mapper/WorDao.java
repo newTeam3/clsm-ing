@@ -22,7 +22,11 @@ public interface WorDao {
 
     Integer findTotals();
 
+    Integer findTotalsByBankId(Integer bankId);
+
     Wor findOne(Integer id);
+
+    Wor findByNumber(Integer number,Integer bankId);
 
     void updateStatus(Integer id,Integer status);
 

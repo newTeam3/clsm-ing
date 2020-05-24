@@ -20,6 +20,9 @@ public interface WorService {
 
     Wor findOne(Integer id);
 
+    Wor findByNumber(Integer number,Integer bankId);
+
+
     void updateStatus(Integer id,Integer status);
 
     List<Wor> findQuestionOrName(Integer page, Integer rows,Wor wor);

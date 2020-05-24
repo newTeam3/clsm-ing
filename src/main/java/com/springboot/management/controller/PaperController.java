@@ -1,9 +1,9 @@
 package com.springboot.management.controller;
 
 import com.springboot.management.mapper.BankDao;
+import com.springboot.management.service.BankService;
 import com.springboot.management.service.PaperService;
 import com.springboot.management.vo.Bank;
-import com.springboot.management.vo.Exam;
 import com.springboot.management.vo.Paper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class PaperController {
     @Autowired
     private PaperService paperService;
     @Autowired
-    private BankDao bankDao;
+    private BankService bankService;
     //查询所有
     @GetMapping("/findAllPaper")
     public Map<String, Object> findBuPage(Integer page, Integer rows) {
@@ -39,20 +39,28 @@ public class PaperController {
     }
     @PostMapping("/save")
     public String save(@RequestBody Paper paper) {
-       log.info("收到的paper" + paper);
-        Bank byBankName = bankDao.findByBankName(paper.getName());
-        Paper paper1 = paperService.findByBankId(byBankName.getId());
-        if (paper1==null){
-            try {
-                paperService.save(paper);
-                return "success";
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "fail";
-            }
-        }else {
-            return "repeat";
+//       log.info("收到的paper" + paper);
+        Bank byBankName = bankService.findByBankName(paper.getName());
+//        log.info("收到的byBankName" + byBankName);
+
+        if (byBankName==null){
+            return "fail1";
         }
+        else {
+            Paper paper1 = paperService.findByPaperName(paper.getPaperName());
+            if (paper1==null){
+                try {
+                    paperService.save(paper);
+                    return "success";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "fail";
+                }
+            }else {
+                return "repeat";
+            }
+        }
+
     }
     @GetMapping("/findOne")
     public Paper findOne(Integer id) {
@@ -62,6 +70,10 @@ public class PaperController {
     //修改
     @PostMapping("/update")
     public String update(@RequestBody Paper paper) {
+        Bank byBankName = bankService.findByBankName(paper.getName());
+        if (byBankName==null){
+            return "fail1";
+        }
         try {
             paperService.update(paper);
             return "success";
@@ -82,8 +94,8 @@ public class PaperController {
     }
     //根据关键字
     @PostMapping("/findByNameOrScore")
-    public Map<String, Object> findByNameOrScore(@RequestParam(value = "page",required = false ,defaultValue = "1") Integer page, Integer rows, @RequestBody Paper paper) {
-        log.info("收到的paper" + paper);
+    public Map<String, Object> findByNameOrScore(@RequestParam(value = "page",required = false ,defaultValue = "1") Integer page,  @RequestParam(value = "size",required = false ,defaultValue = "4") Integer rows, @RequestBody Paper paper) {
+//        log.info("收到的paper" + paper);
         log.info("page" + page);
         page = page == null ? 1 : page;
         rows = rows == null ? 4 : rows;

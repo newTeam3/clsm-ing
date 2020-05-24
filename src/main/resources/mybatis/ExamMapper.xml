@@ -5,7 +5,7 @@
 <mapper namespace="com.springboot.management.mapper.ExamDao">
 
     <select id="findByPage" resultType="Exam">
-    SELECT exam.*,bank.name,user.username FROM user ,exam,bank WHERE user.id=exam.uid and exam.paperid=bank.id
+   SELECT exam.*,paper.paperName,user.name as username FROM user ,exam,paper WHERE user.id=exam.uid and exam.paperid=paper.id and  user.name=#{username}
     limit #{start},#{rows}
    </select>
 
@@ -26,11 +26,11 @@
     </select>
 
     <select id="findTotals" resultType="Integer">
-     select count(id) from exam
+     select count(id) from exam where exam.uid=#{uid}
     </select>
 
     <select id="findOne" resultType="Exam">
-         SELECT exam.*,bank.name,user.username FROM user ,exam,bank WHERE user.id=exam.uid and bank.id=exam.paperid  and exam.id=#{id}
+         SELECT exam.*,paper.paperName,user.username FROM user ,exam,paper WHERE user.id=exam.uid and paper.id=exam.paperid  and exam.id=#{id}
     </select>
 
     <update id="updateStatus">
@@ -46,15 +46,15 @@
 
     <select id="findByNameOrScore" resultType="Exam" parameterType="Exam">
             SELECT
-                em.*, bk.name,
-                us.username
+                em.*, pp.paperName,
+                us.name as username
             FROM
-                user us,exam em,bank bk
+                user us,exam em,paper pp
             WHERE
             us.id = em.uid
-            AND em.paperid = bk.id
+            AND em.paperid = pp.id
             <if test="exam.username!=null and exam.username!=''">
-            AND us.username LIKE  '%${exam.username}%'
+            AND us.name LIKE  '%${exam.username}%'
             </if>
             <if test="exam.score!=null">
             AND em.score LIKE '%${exam.score}%'

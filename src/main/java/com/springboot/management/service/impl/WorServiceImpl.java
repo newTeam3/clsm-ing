@@ -21,7 +21,10 @@ public class WorServiceImpl implements WorService {
     private BankDao bankDao;
     @Override
     public void save(Wor wor) {
-        wor.setBankId(bankDao.findByBankName(wor.getName()).getId());
+        Integer id = bankDao.findByBankName(wor.getName()).getId();
+        Integer totals = worDao.findTotalsByBankId(id);
+        wor.setNumber(totals+1);
+        wor.setBankId(id);
         worDao.save(wor);
         Bank bank = bankDao.findOne(wor.getBankId());
         bank.setBankCount(bank.getBankCount()+1);
@@ -72,6 +75,12 @@ public class WorServiceImpl implements WorService {
 
         return worDao.findOne(id);
     }
+
+    @Override
+    public Wor findByNumber(Integer number,Integer bankId) {
+        return worDao.findByNumber(number,bankId);
+    }
+
 
     @Override
     public void updateStatus(Integer id, Integer status) {
