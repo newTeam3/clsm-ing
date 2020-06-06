@@ -1,9 +1,10 @@
 package com.springboot.management.mapper;
 
-import com.springboot.management.vo.UserVO;
+import com.springboot.management.vo.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -24,4 +25,27 @@ public interface UserMapper {
 
 
     UserVO getUserName(String username);
+
+    //获取所有用户
+    List<UserVO> findAllUser(Map<Object,Object> map);
+
+    List<Classes> findAllClasses();
+
+    List<Groups> findAllGroups();
+
+    List<College> findAllCollege();
+
+    List<Position> findAllPosition();
+
+    int addUser(UserVO userVO);
+
+    int updateUser(UserVO userVO);
+
+    int banUser(UserVO userVO);
+
+    int banUserRows(List list);
+
+    UserVO checkPhone(Map<String,Object> map);
+
+    int changePwd(UserVO userVO);
 }

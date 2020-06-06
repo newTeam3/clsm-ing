@@ -7,4 +7,94 @@
     <select id="getUserName" resultType="UserVO">
             select  * from user where username like '%${_parameter}%'
     </select>
+    
+    <!--查找所有用户信息 -->
+    <select id="findAllUser" parameterType="map" resultMap="userResult">
+       select u.id,u.username,u.password,u.phone,u.created,u.sex,u.lastPasswordResetDate,u.name,u.cid,c.name as cidName,
+        u.coid,co.name as coidName,u.gid,g.name as gidName,u.pid,p.name as pidName,u.status,r.id as r_id,r.roleName as roles from user u,
+        classes c,college co,groups g,position p,user_role ur,role r where u.cid=c.id and u.coid=co.id and u.gid=g.id and u.pid = p.id and u.id=ur.userId and ur.roleId=r.id
+        <if test="cid != null and cid !=''">
+            and u.cid =#{cid}
+        </if>
+        <if test="gid != null and gid !=''">
+            and u.gid =#{gid}
+        </if>
+    </select>
+    <resultMap id="userResult" type="userVO">
+        <id property="id" column="id"/>
+        <id property="username" column="username"/>
+        <id property="password" column="password"/>
+        <id property="phone" column="phone"/>
+        <id property="created" column="created"/>
+        <id property="sex" column="sex"/>
+        <id property="lastPasswordResetDate" column="lastPasswordResetDate"/>
+        <id property="name" column="name"/>
+        <id property="cid" column="cid"/>
+        <id property="cidName" column="cidName"/>
+        <id property="coid" column="coid"/>
+        <id property="coidName" column="coidName"/>
+        <id property="pid" column="pid"/>
+        <id property="pidName" column="pidName"/>
+        <id property="gid" column="gid"/>
+        <id property="gidName" column="gidName"/>
+        <id property="status" column="status"/>
+
+        <collection property="roles" ofType="roleVO">
+            <id column="r_id" property="id"></id>
+            <result column="roles" property="roleName"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllClasses" resultMap="classResult">
+      SELECT c.*,co.id as co_id,co.name as co_name,co.status as co_status FROM classes c,college co where c.cid=co.id
+    </select>
+    <resultMap type="classes" id="classResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="status" column="status"/>
+        <association property="college" javaType="college">
+            <id property="id" column="co_id"/>
+            <result property="status" column="co_status"/>
+            <result property="name" column="co_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllGroups" resultType="groups">
+        select * from groups
+    </select>
+
+    <select id="findAllCollege" resultType="college">
+        select * from college
+    </select>
+
+    <select id="findAllPosition" resultType="position">
+        select * from position
+    </select>
+
+    <insert id="addUser" parameterType="userVO">
+        INSERT INTO user (username, password,name,sex,phone,created,lastPasswordResetDate,cid,coid,pid,gid,status) VALUES ( #{username}, #{password},#{name},#{sex},#{phone},#{created},#{lastPasswordResetDate},#{cid},#{coid},#{pid},#{gid},1)
+    </insert>
+
+    <update id="updateUser" parameterType="userVO">
+        UPDATE user SET username=#{username},password=#{password},name=#{name},sex=#{sex},phone=#{phone},cid=#{cid},coid=#{coid},pid=#{pid},gid=#{gid} where id=#{id}
+    </update>
+
+    <update id="banUser" parameterType="userVO">
+        UPDATE user SET status=#{status} where id=#{id}
+    </update>
+
+    <update id="banUserRows" parameterType="list">
+        UPDATE user SET status=0 where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="checkPhone" parameterType="map" resultType="userVO">
+        select * from user where id=#{id} and phone=#{phone}
+    </select>
+
+    <update id="changePwd" parameterType="userVO">
+        UPDATE user SET password=#{password} where id=#{id}
+    </update>
 </mapper>

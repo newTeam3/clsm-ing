@@ -64,7 +64,7 @@ public class LogAop {
                     //获取ip
                     String ip = request.getRemoteAddr();
                     //获取用户
-                    UserVO userVO = (UserVO) SecurityUtils.getSubject().getPrincipal();
+    UserVO userVO = (UserVO) SecurityUtils.getSubject().getPrincipal();
 
                     if(!StringUtils.isEmpty(userVO)) {
                         String userName = userVO.getUsername();

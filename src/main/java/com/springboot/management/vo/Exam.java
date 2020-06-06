@@ -77,4 +77,7 @@ public class Exam {
     public void setScore(Float score) {
         this.score = score;
     }
+
+    public void setName(String java) {
+    }
 }
