@@ -64,13 +64,13 @@
 
     <select id="totalsSelect"  resultType="Integer" parameterType="Exam">
         select count(*) from ( SELECT
-        em.*, bk.name,
-        us.username
+        em.*, pp.paperName,
+        us.name as username
         FROM
-        user us,exam em,bank bk
+        user us,exam em,paper pp
         WHERE
         us.id = em.uid
-        AND em.paperid = bk.id
+        AND em.paperid = pp.id
         <if test="username!=null and username!=''">
             AND us.username LIKE  '%${username}%'
         </if>

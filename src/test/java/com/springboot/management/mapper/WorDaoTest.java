@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,5 +59,16 @@ class WorDaoTest {
         for (Wor wor1 :byPage){
             System.out.println(wor1);
         }
+    }
+    @Test
+    public void Answer(){
+        String paperNum="1,3,4,6,8,12,15";
+        String[] c = paperNum.split(",");
+        List<Wor> wors = new ArrayList<Wor>();
+        for (String ss : c){
+            Wor one = worService.findByNumber(Integer.valueOf(ss),1);
+            wors.add(one);
+        }
+          System.out.println(wors);
     }
 }

@@ -24,6 +24,8 @@ public interface ExamDao {
 
     Exam findOne(Integer id);
 
+    Exam findByUidAndPaperId(Integer uid,Integer paperId);
+
     void updateStatus(Integer id,Integer status);
 
     Integer totalsSelect(Exam exam);

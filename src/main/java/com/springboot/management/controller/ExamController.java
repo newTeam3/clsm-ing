@@ -26,10 +26,11 @@ public class ExamController {
 
 
     @GetMapping("/findAllExam")
-    public Map<String, Object> findBuPage( @RequestParam(value = "page",required = false ,defaultValue = "1") Integer page,@RequestParam(value = "size",required = false ,defaultValue = "4") Integer rows,@RequestParam(value = "username") String username,@RequestParam(value = "name") String name) {
+    public Map<String, Object> findBuPage( @RequestParam(value = "page",required = false ,defaultValue = "1") Integer page,@RequestParam(value = "rows",required = false) Integer rows,@RequestParam(value = "username") String username,@RequestParam(value = "name") String name) {
         log.info("收到的" + page);
         log.info("收到的" + username);
         log.info("收到的" + name);
+        log.info("收到的" + rows);
         page = page == null ? 1 : page;
         rows = rows == null ? 4 : rows;
         HashMap<String, Object> map = new HashMap<>();
@@ -120,5 +121,11 @@ public class ExamController {
         map.put("totalPage", totalPage);
         map.put("page", page);
         return map;
+    }
+
+    @GetMapping("/findExamSource")
+    public Exam findExamSource(Integer uid,Integer paperId){
+
+      return examService.findByUIdAndPaperId(uid,paperId);
     }
 }

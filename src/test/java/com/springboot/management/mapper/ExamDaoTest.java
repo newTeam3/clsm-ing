@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ExamDaoTest {
 
-//    @Autowired
-//    private ExamService examService;
+    @Autowired
+    private ExamService examService;
 //    @Test
 //    void findByPage() {
 //        List<Exam> exams = examService.findByPage(1, 4);
@@ -57,13 +57,13 @@ class ExamDaoTest {
 //            System.out.println(wor);
 //        }
 //    }
-//    @Test
-//    void totalSelect() {
-//        Exam exam = new Exam();
-////        exam.setUsername("adm");
-////        exam.setScore(0);
-////        System.out.println(exam);
-//        Integer integer = examService.totalsSelect(exam);
-//        System.out.println(integer);
-//    }
+    @Test
+    void totalSelect() {
+        Exam exam = new Exam();
+//        exam.setUsername("adm");
+//        exam.setScore(0);
+//        System.out.println(exam);
+        Integer integer = examService.totalsSelect(exam);
+        System.out.println(integer);
+    }
 }

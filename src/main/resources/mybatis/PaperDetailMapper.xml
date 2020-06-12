@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.management.mapper.PaperDetailDao">
+
+    <select id="findAll" resultType="PaperDetail">
+    select *  from paperDetail where uid=#{uid} and paperId=#{paperId}
+   </select>
+
+<!--    批量插入-->
+    <sql id="paperDetailInfoColumnsList">
+        <trim suffixOverrides=",">
+            <if test="paperDetail.uid != null">uid,</if>
+            <if test="paperDetail.worid != null">worid,</if>
+            <if test="paperDetail.questions != null">questions,</if>
+            <if test="paperDetail.question != null">question,</if>
+            <if test="paperDetail.answer != null">answer,</if>
+            <if test="paperDetail.name != null">name,</if>
+            <if test="paperDetail.options != null">options,</if>
+            <if test="paperDetail.optionA != null">optionA,</if>
+            <if test="paperDetail.optionB != null">optionB,</if>
+            <if test="paperDetail.optionC != null">optionC,</if>
+            <if test="paperDetail.paperId != null">paperId,</if>
+            <if test="paperDetail.optionD != null">optionD</if>
+        </trim>
+    </sql>
+
+    <sql id="paperDetailInfoValuesList">
+        <trim suffixOverrides=",">
+            <if test="paperDetail.uid != null">#{paperDetail.uid},</if>
+            <if test="paperDetail.worid != null">#{paperDetail.worid},</if>
+            <if test="paperDetail.questions != null">#{paperDetail.questions},</if>
+            <if test="paperDetail.question != null">#{paperDetail.question},</if>
+            <if test="paperDetail.answer != null">#{paperDetail.answer},</if>
+            <if test="paperDetail.name != null">#{paperDetail.name},</if>
+            <if test="paperDetail.options != null">#{paperDetail.options},</if>
+            <if test="paperDetail.optionA != null">#{paperDetail.optionA},</if>
+            <if test="paperDetail.optionB != null">#{paperDetail.optionB},</if>
+            <if test="paperDetail.optionC != null">#{paperDetail.optionC},</if>
+            <if test="paperDetail.paperId != null">#{paperDetail.paperId},</if>
+            <if test="paperDetail.optionD != null">#{paperDetail.optionD}</if>
+        </trim>
+    </sql>
+    <insert id="save" parameterType="paperDetail">
+        <foreach collection="list" separator=";" item="paperDetail" index="index">
+
+       insert into paperDetail(<include refid="paperDetailInfoColumnsList"></include>) values (<include refid="paperDetailInfoValuesList"></include>)
+
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        delete  from paperDetail where id=#{id}
+    </delete>
+
+    <update id="update" parameterType="paperDetail">
+        <foreach collection="list" item="paperDetail" index="index" open="" close="" separator=";">
+            update paperDetail
+            <set>
+                <if test="paperDetail.questions != null">questions=#{paperDetail.questions},</if>
+                <if test="paperDetail.question != null">question=#{paperDetail.question},</if>
+                <if test="paperDetail.answer != null">answer=#{paperDetail.answer},</if>
+                <if test="paperDetail.name != null">name=#{paperDetail.name},</if>
+                <if test="paperDetail.options != null">options=#{paperDetail.options},</if>
+                <if test="paperDetail.optionA != null">optionA=#{paperDetail.optionA},</if>
+                <if test="paperDetail.optionB != null">optionB=#{paperDetail.optionB},</if>
+                <if test="paperDetail.optionC != null">optionC=#{paperDetail.optionC},</if>
+                <if test="paperDetail.optionD != null">optionD=#{paperDetail.optionD}</if>
+            </set>
+            where uid = #{paperDetail.uid} and worid=#{paperDetail.worid} and paperId=#{paperDetail.paperId}
+        </foreach>
+    </update>
+</mapper>

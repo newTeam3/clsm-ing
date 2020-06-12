@@ -19,6 +19,7 @@ public interface ExamService {
 
     Exam findByUIdAndPaperId(Integer uid,Integer paperid);
 
+
     Exam findOne(Integer id);
 
     void updateStatus(Integer id,Integer status);
