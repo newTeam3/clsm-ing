@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class CommonExceptionHandler {
-    int age;
     @ExceptionHandler(MyException.class)
     public ResponseEntity<ExceptionResult> handleExcption(MyException e){
         return ResponseEntity.status(e.getExceptionEnum().getCode()).body(new ExceptionResult(e.getExceptionEnum()));
