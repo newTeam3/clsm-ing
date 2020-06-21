@@ -11,6 +11,12 @@
         <if test="name != null and name !=''">
             and u.name like concat("%",#{name},"%")
         </if>
+        <if test="state != null and state !=''">
+            and q.state = #{state}
+        </if>
+        <if test="uid != null and uid !=''">
+            and q.uid = #{uid}
+        </if>
 
     </select>
     <!--注意：两个表中的字段如果相同的话，一定要给其中一个表字段的column取别名。如 上面查询语句中的co.id as co_id对应下面的column="co_id"-->
@@ -37,7 +43,7 @@
     </update>
 
     <select id="findAnswerByQid" parameterType="int" resultMap="answerResult">
-        select a.*,u.id as u_id,u.name as u_name from answer a,user u where a.uid=u.id and qid=#{qid} order by time desc
+        select a.*,u.id as u_id,u.name as u_name,u.img as u_img from answer a,user u where a.uid=u.id and qid=#{qid} order by time desc
     </select>
 
     <resultMap id="answerResult" type="answer">
@@ -48,6 +54,7 @@
         <association property="userVO" javaType="userVO">
             <id property="id" column="u_id"/>
             <result property="name" column="u_name"/>
+            <result property="img" column="u_img"/>
         </association>
     </resultMap>
 
@@ -100,5 +107,12 @@
             #{id}
         </foreach>
     </update>
+<!--    根据id查找问题-->
+    <select id="findQuestionById" parameterType="_int" resultMap="questionResult">
+         SELECT q.*,u.id as u_id,u.name as u_name FROM question q,user u where q.uid=u.id and q.id=#{id}
+    </select>
 
+    <insert id="addQuestion" parameterType="question">
+        INSERT INTO question (title, content,time,uid,quanity,status,state) VALUES ( #{title}, #{content},#{time},#{userVO.id},0,0,1)
+    </insert>
 </mapper>

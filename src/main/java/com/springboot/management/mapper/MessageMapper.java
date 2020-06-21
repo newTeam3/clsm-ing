@@ -27,4 +27,7 @@ public interface MessageMapper {
 
     int addCount(int id);
 
+    Message getMessageItem(int id);
+
+    List<Message> getMessageByUid(Map<Object,Object> map);
 }

@@ -87,4 +87,18 @@ public class MessageServiceImpl implements MessageService {
 
     }
 
+    @Override
+    public Message getMessageItem(int id) {
+        Message message=messageMapper.getMessageItem(id);
+        return message;
+    }
+
+    @Override
+    public PageInfo getMessageByUid(PageVO pageVO) {
+        PageHelper.startPage(pageVO.getPage(), pageVO.getRows());
+        List<Message> list = messageMapper.getMessageByUid(pageVO.getKey());
+        PageInfo info = new PageInfo(list);
+        return info;
+    }
+
 }

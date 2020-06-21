@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/question")
@@ -78,6 +79,22 @@ public class QuestionController {
         List<String> list = Arrays.asList(ids.split(","));
         questionService.banAnswerRows(list);
         System.out.println("这是list" + list);
+        return ResponseEntity.ok("操作成功");
+    }
+    //根据id查找问题
+    @GetMapping(value = "/findQuestionById")
+    public ResponseEntity<?> findQuestionById(@RequestParam("id") int id) {
+
+        Map<String, Object> map = questionService.findQuestionById(id);
+        return ResponseEntity.ok(map);
+    }
+    //前台发布问题
+    @PostMapping(value = "/addQuestion")
+    public ResponseEntity<?> addQuestion(@RequestBody Question question) {
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        question.setTime(timestamp);
+        questionService.addQuestion(question);
         return ResponseEntity.ok("操作成功");
     }
 }

@@ -24,4 +24,8 @@ public interface UserService {
     UserVO checkPhone(Map<String,Object> map);
 
     void changePwd(UserVO userVO);
+
+    UserVO findUserByID(int id);
+
+    void changeUserData(UserVO userVO);
 }

@@ -53,7 +53,7 @@ sonImgPath: /images/
 
 itcast-fastdfs:
   #文件上传临时目录
-  upload_location: F:\\
+  upload_location: D:\\
 
 
 

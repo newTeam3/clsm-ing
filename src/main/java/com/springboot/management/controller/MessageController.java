@@ -81,5 +81,15 @@ public class MessageController {
         messageService.commit(message);
         return ResponseEntity.ok("操作成功");
     }
+    @GetMapping(value = "/getMessageItem")
+    public ResponseEntity<?> getMessageItem(@RequestParam("id") int id) {
+        Message message=messageService.getMessageItem(id);
+        return ResponseEntity.ok(message);
+    }
+    @PostMapping(value = "/getMessageByUid")
+    public ResponseEntity<?> getMessageByUid(@RequestBody PageVO pageVO) {
+        PageInfo pageInfo = messageService.getMessageByUid(pageVO);
+        return ResponseEntity.ok(pageInfo);
+    }
 
 }

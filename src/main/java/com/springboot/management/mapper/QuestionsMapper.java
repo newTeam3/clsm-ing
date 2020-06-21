@@ -27,4 +27,8 @@ public interface QuestionsMapper {
     int banAnswer(Answer answer);
 
     int banAnswerRows(List list);
+
+    Question findQuestionById(int id);
+
+    int addQuestion(Question question);
 }

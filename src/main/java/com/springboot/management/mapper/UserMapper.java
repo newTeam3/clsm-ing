@@ -48,4 +48,8 @@ public interface UserMapper {
     UserVO checkPhone(Map<String,Object> map);
 
     int changePwd(UserVO userVO);
+
+    UserVO findUserByID(int id);
+
+    int changeUserData(UserVO userVO);
 }

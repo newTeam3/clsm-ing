@@ -91,4 +91,18 @@ public class UserServiceImpl implements UserService {
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }
     }
+
+    @Override
+    public UserVO findUserByID(int id) {
+        UserVO userVO=userMapper.findUserByID(id);
+        return userVO;
+    }
+
+    @Override
+    public void changeUserData(UserVO userVO) {
+        int i = userMapper.changeUserData(userVO);
+        if (i==0){
+            throw new MyException(ExceptionEnum.SERVER_CONGESTION);
+        }
+    }
 }

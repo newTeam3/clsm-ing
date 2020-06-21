@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -82,6 +84,28 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void banAnswerRows(List list) {
         int i = questionsMapper.banAnswerRows(list);
+        if (i==0){
+            throw new MyException(ExceptionEnum.SERVER_CONGESTION);
+        }
+    }
+
+    @Override
+    public Map<String, Object> findQuestionById(int id) {
+        Question question=questionsMapper.findQuestionById(id);
+        List<Answer> list=questionsMapper.findAnswerByQid(id);
+        int i = questionsMapper.addQuanity(id);
+        if (i==0){
+            throw new MyException(ExceptionEnum.SERVER_CONGESTION);
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("qes",question);
+        map.put("asw",list);
+        return map;
+    }
+
+    @Override
+    public void addQuestion(Question question) {
+        int i = questionsMapper.addQuestion(question);
         if (i==0){
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }

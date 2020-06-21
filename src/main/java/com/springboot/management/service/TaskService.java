@@ -7,6 +7,7 @@ import com.springboot.management.vo.Notice;
 import com.springboot.management.vo.Position;
 import com.springboot.management.vo.Task;
 import org.apache.ibatis.annotations.Param;
+import org.aspectj.weaver.ast.Not;
 
 import java.util.List;
 import java.util.Map;
@@ -35,4 +36,6 @@ public interface TaskService {
     Map<String,Object> findCommitData(int id);
 
     boolean checkTask(int uid,int tid);
+
+
 }

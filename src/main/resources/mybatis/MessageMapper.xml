@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.management.mapper.MessageMapper">
     <select id="findAll" parameterType="map" resultMap="messageResult">
-        SELECT m.*,u.id as u_id,u.name as u_name,t.id as t_id,t.content as t_content FROM message m,user u,task t where m.uid=u.id and m.tid=t.id and t.sort=0
+        SELECT m.*,u.id as u_id,u.name as u_name,t.id as t_id,t.content as t_content,t.sort as t_sort FROM message m,user u,task t where m.uid=u.id and m.tid=t.id and t.sort=0
 
          <if test="state != null">
             and m.state=#{state}
@@ -32,6 +32,7 @@
         <association property="task" javaType="task">
             <id property="id" column="t_id"/>
             <result property="content" column="t_content"/>
+            <result property="sort" column="t_sort"/>
         </association>
     </resultMap>
 
@@ -93,6 +94,19 @@
         UPDATE task SET count=count+1 where id=#{id}
     </update>
 
+    <select id="getMessageItem" resultType="message">
+        select * from message where id=#{id}
+    </select>
 
+    <select id="getMessageByUid" resultMap="messageResult">
+        select m.*,t.id as t_id,t.content as t_content,t.sort as t_sort from message m,task t where m.tid=t.id and  m.uid=#{uid} and m.status=#{status}
+        <if test="sort != null and sort !=''">
+            and sort=#{sort}
+        </if>
+        <if test="state != null and state !=''">
+            and state = #{state}
+        </if>
+        order by time desc
+    </select>
 
 </mapper>

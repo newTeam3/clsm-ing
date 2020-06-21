@@ -26,6 +26,7 @@ public class FileServerController {
     @ResponseBody
     public FileSystem upload(@RequestParam("file") MultipartFile file) throws IOException {
         //将文件先存储在web服务器上（本机），再调用fastDFS的client将文件上传到 fastDSF服务器
+        System.out.println("file"+file);
         FileSystem fileSystem = new FileSystem();
         //得到 文件的原始名称
         String originalFilename = file.getOriginalFilename();
@@ -58,12 +59,13 @@ public class FileServerController {
             fileSystem.setFileId(fileId);
             fileSystem.setFilePath(fileId);
             fileSystem.setFileName(originalFilename);
-
+            System.out.println("这是路径"+fileSystem);
             //通过调用service及dao将文件的路径存储到数据库中
 
 
             //关闭trackerServer的连接
             trackerServer.close();
+            System.out.println("到底："+fileSystem);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -26,4 +26,8 @@ public interface MessageService {
     PageInfo findAllWeekReport(PageVO pageVO);
 
     void commit(Message message);
+
+    Message getMessageItem(int id);
+
+    PageInfo getMessageByUid(PageVO pageVO);
 }

@@ -15,6 +15,7 @@ public class Comment {
     private Integer aid;
     private Integer uid;
     private Integer pid;
+    private String img;
     private String name;
     private String content;
     private Date time;

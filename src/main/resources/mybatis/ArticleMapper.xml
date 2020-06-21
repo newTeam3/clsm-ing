@@ -47,6 +47,9 @@
             <if test="sid != null and sid !=''">
                 and a.sid = #{sid}
             </if>
+        <if test="status != null and status !=''">
+            and a.status = #{status}
+        </if>
             order by createTime desc
     </select>
 
@@ -74,7 +77,7 @@
     </update>
 
     <select id="getComments" parameterType="int" resultType="comment">
-        SELECT c.id,c.aid,c.pid,c.uid,u.name,c.content,c.time
+        SELECT c.id,c.aid,c.pid,c.uid,u.name,u.img,c.content,c.time
         FROM comment c,user u WHERE c.aid=#{aid} AND c.uid=u.id
     </select>
 

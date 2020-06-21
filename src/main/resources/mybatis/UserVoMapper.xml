@@ -10,7 +10,7 @@
     
     <!--查找所有用户信息 -->
     <select id="findAllUser" parameterType="map" resultMap="userResult">
-       select u.id,u.username,u.password,u.phone,u.created,u.sex,u.lastPasswordResetDate,u.name,u.cid,c.name as cidName,
+       select u.id,u.username,u.password,u.phone,u.created,u.sex,u.lastPasswordResetDate,u.name,u.cid,u.img,c.name as cidName,
         u.coid,co.name as coidName,u.gid,g.name as gidName,u.pid,p.name as pidName,u.status,r.id as r_id,r.roleName as roles from user u,
         classes c,college co,groups g,position p,user_role ur,role r where u.cid=c.id and u.coid=co.id and u.gid=g.id and u.pid = p.id and u.id=ur.userId and ur.roleId=r.id
         <if test="cid != null and cid !=''">
@@ -22,23 +22,23 @@
     </select>
     <resultMap id="userResult" type="userVO">
         <id property="id" column="id"/>
-        <id property="username" column="username"/>
-        <id property="password" column="password"/>
-        <id property="phone" column="phone"/>
-        <id property="created" column="created"/>
-        <id property="sex" column="sex"/>
-        <id property="lastPasswordResetDate" column="lastPasswordResetDate"/>
-        <id property="name" column="name"/>
-        <id property="cid" column="cid"/>
-        <id property="cidName" column="cidName"/>
-        <id property="coid" column="coid"/>
-        <id property="coidName" column="coidName"/>
-        <id property="pid" column="pid"/>
-        <id property="pidName" column="pidName"/>
-        <id property="gid" column="gid"/>
-        <id property="gidName" column="gidName"/>
-        <id property="status" column="status"/>
-
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <result property="created" column="created"/>
+        <result property="sex" column="sex"/>
+        <result property="lastPasswordResetDate" column="lastPasswordResetDate"/>
+        <result property="name" column="name"/>
+        <result property="cid" column="cid"/>
+        <result property="cidName" column="cidName"/>
+        <result property="coid" column="coid"/>
+        <result property="coidName" column="coidName"/>
+        <result property="pid" column="pid"/>
+        <result property="pidName" column="pidName"/>
+        <result property="gid" column="gid"/>
+        <result property="gidName" column="gidName"/>
+        <result property="status" column="status"/>
+        <result property="img" column="img"/>
         <collection property="roles" ofType="roleVO">
             <id column="r_id" property="id"></id>
             <result column="roles" property="roleName"/>
@@ -97,4 +97,16 @@
     <update id="changePwd" parameterType="userVO">
         UPDATE user SET password=#{password} where id=#{id}
     </update>
+
+    <select id="findUserByID" resultMap="userResult">
+               select u.id,u.username,u.password,u.phone,u.created,u.sex,u.lastPasswordResetDate,u.name,u.cid,c.name as cidName,
+        u.coid,co.name as coidName,u.gid,g.name as gidName,u.pid,p.name as pidName,u.status,u.img,r.id as r_id,r.roleName as roles from user u,
+        classes c,college co,groups g,position p,user_role ur,role r where u.cid=c.id and u.coid=co.id and u.gid=g.id and u.pid = p.id and u.id=ur.userId and ur.roleId=r.id and u.id=#{id}
+    </select>
+
+    <update id="changeUserData" parameterType="userVO">
+         UPDATE user SET name=#{name},sex=#{sex},phone=#{phone},
+         cid=#{cid},coid=#{coid} where id=#{id}
+    </update>
+
 </mapper>

@@ -7,6 +7,7 @@ import com.springboot.management.vo.Position;
 import com.springboot.management.vo.Question;
 
 import java.util.List;
+import java.util.Map;
 
 public interface QuestionService {
     PageInfo findAll(PageVO pageVO);
@@ -24,4 +25,8 @@ public interface QuestionService {
     void banAnswer(Answer answer);
 
     void banAnswerRows(List list);
+
+    Map<String,Object> findQuestionById(int id);
+
+    void addQuestion(Question question);
 }

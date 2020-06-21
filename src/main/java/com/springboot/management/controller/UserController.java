@@ -86,5 +86,16 @@ public class UserController {
         userService.changePwd(userVO);
         return ResponseEntity.ok("操作成功");
     }
-
+    @GetMapping(value = "/findUserByID")
+    public ResponseEntity<?> findUserByID(@RequestParam("id") int id) {
+        UserVO userVO=userService.findUserByID(id);
+        System.out.println("uservo" +userVO);
+        return ResponseEntity.ok(userVO);
+    }
+    //前台修改个人资料
+    @PostMapping(value = "/changeUserData")
+    public ResponseEntity<?> changeUserData(@RequestBody UserVO userVO) {
+        userService.changeUserData(userVO);
+        return ResponseEntity.ok("操作成功");
+    }
 }
