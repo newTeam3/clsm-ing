@@ -1,13 +1,15 @@
-package com.springboot.management.controller;/*
+package com.springboot.management.controller;
+/*
  *@Author lee
  * @date 2020/06/18
  */
 
 
+
 import com.springboot.management.vo.FileSystem;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,14 +21,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/filesystem")
 public class FileServerController {
-    @Value("${itcast-fastdfs.upload_location}")
-    private String upload_location;
+
+    private String upload_location="F:\\";
 
     @PostMapping("/upload")
     @ResponseBody
     public FileSystem upload(@RequestParam("file") MultipartFile file) throws IOException {
         //将文件先存储在web服务器上（本机），再调用fastDFS的client将文件上传到 fastDSF服务器
-        System.out.println("file"+file);
         FileSystem fileSystem = new FileSystem();
         //得到 文件的原始名称
         String originalFilename = file.getOriginalFilename();
@@ -40,7 +41,7 @@ public class FileServerController {
         String newFilePath = file1.getAbsolutePath();
         try {
             //加载fastDFS客户端的配置 文件
-            ClientGlobal.initByProperties("config/fastdfs-client.properties");
+            ClientGlobal.initByProperties("fastdfs-client.properties");
             System.out.println("network_timeout=" + ClientGlobal.g_network_timeout + "ms");
             System.out.println("charset=" + ClientGlobal.g_charset);
 
@@ -59,13 +60,12 @@ public class FileServerController {
             fileSystem.setFileId(fileId);
             fileSystem.setFilePath(fileId);
             fileSystem.setFileName(originalFilename);
-            System.out.println("这是路径"+fileSystem);
-            //通过调用service及dao将文件的路径存储到数据库中
+
+
 
 
             //关闭trackerServer的连接
             trackerServer.close();
-            System.out.println("到底："+fileSystem);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

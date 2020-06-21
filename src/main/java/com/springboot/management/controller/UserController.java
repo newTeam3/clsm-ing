@@ -50,7 +50,7 @@ public class UserController {
 
     @PostMapping(value = "/updateUser")
     public ResponseEntity<?> updateUser(@RequestBody UserVO userVO) {
-        System.out.println("这是uservo"+userVO);
+        System.out.println("这是uservo"+userVO.getImg());
         String encode = passwordEncoder.encode(userVO.getPassword());
         userVO.setPassword(encode);
         userService.updateUser(userVO);
@@ -90,12 +90,13 @@ public class UserController {
     @GetMapping(value = "/findUserByID")
     public ResponseEntity<?> findUserByID(@RequestParam("id") int id) {
         UserVO userVO=userService.findUserByID(id);
-        System.out.println("uservo" +userVO);
+//        System.out.println("uservo" +userVO);
         return ResponseEntity.ok(userVO);
     }
     //前台修改个人资料
     @PostMapping(value = "/changeUserData")
     public ResponseEntity<?> changeUserData(@RequestBody UserVO userVO) {
+        System.out.println(userVO.getImg());
         userService.changeUserData(userVO);
         return ResponseEntity.ok("操作成功");
     }

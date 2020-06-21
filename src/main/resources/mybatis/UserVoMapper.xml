@@ -7,7 +7,7 @@
     <select id="getUserName" resultType="UserVO">
             select  * from user where username like '%${_parameter}%'
     </select>
-    
+
     <!--查找所有用户信息 -->
     <select id="findAllUser" parameterType="map" resultMap="userResult">
 --         select u.id,u.username,u.password,u.phone,u.created,u.sex,u.lastPasswordResetDate,u.name,u.cid,c.name as cidName,
