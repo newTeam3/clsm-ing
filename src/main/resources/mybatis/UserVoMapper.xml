@@ -109,7 +109,7 @@
 
     <update id="changeUserData" parameterType="userVO">
          UPDATE user SET name=#{name},sex=#{sex},phone=#{phone},
-         cid=#{cid},coid=#{coid} where id=#{id}
+         cid=#{cid},coid=#{coid} ,img=#{img} where id=#{id}
     </update>
 
     <select id="findRolesByUid" resultType="roleVO">
