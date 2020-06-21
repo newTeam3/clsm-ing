@@ -10,9 +10,12 @@
     
     <!--查找所有用户信息 -->
     <select id="findAllUser" parameterType="map" resultMap="userResult">
-       select u.id,u.username,u.password,u.phone,u.created,u.sex,u.lastPasswordResetDate,u.name,u.cid,u.img,c.name as cidName,
-        u.coid,co.name as coidName,u.gid,g.name as gidName,u.pid,p.name as pidName,u.status,r.id as r_id,r.roleName as roles from user u,
-        classes c,college co,groups g,position p,user_role ur,role r where u.cid=c.id and u.coid=co.id and u.gid=g.id and u.pid = p.id and u.id=ur.userId and ur.roleId=r.id
+--         select u.id,u.username,u.password,u.phone,u.created,u.sex,u.lastPasswordResetDate,u.name,u.cid,c.name as cidName,
+--         u.coid,co.name as coidName,u.gid,g.name as gidName,u.pid,p.name as pidName,u.status,u.img,r.id as r_id,r.roleName as roles from user u,
+--         classes c,college co,groups g,position p,user_role ur,role r where u.cid=c.id and u.coid=co.id and u.gid=g.id and u.pid = p.id and u.id=ur.userId and ur.roleId=r.id
+        select u.id,u.username,u.password,u.phone,u.created,u.sex,u.lastPasswordResetDate,u.name,u.cid,c.name as cidName,
+        u.coid,co.name as coidName,u.gid,g.name as gidName,u.pid,p.name as pidName,u.status,u.img from user u,
+        classes c,college co,groups g,position p where u.cid=c.id and u.coid=co.id and u.gid=g.id and u.pid = p.id
         <if test="cid != null and cid !=''">
             and u.cid =#{cid}
         </if>
@@ -109,4 +112,15 @@
          cid=#{cid},coid=#{coid} where id=#{id}
     </update>
 
+    <select id="findRolesByUid" resultType="roleVO">
+        select * from role where id in (select roleId from user_role where userId =#{userId})
+    </select>
+
+    <delete id="deleteAll">
+        DELETE FROM user_role where userId =#{userId}
+    </delete>
+
+    <insert id="updateRoles">
+      INSERT INTO user_role (userId, roleId) VALUES (#{userId},#{roleId})
+    </insert>
 </mapper>

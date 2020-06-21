@@ -3,6 +3,7 @@ package com.springboot.management.controller;
 import com.github.pagehelper.PageInfo;
 import com.springboot.management.common.utils.PageVO;
 import com.springboot.management.service.UserService;
+import com.springboot.management.vo.RoleVO;
 import com.springboot.management.vo.Task;
 import com.springboot.management.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class UserController {
     public ResponseEntity<?> findAllUser(@RequestBody PageVO pageVO) {
         System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = userService.findAllUser(pageVO);
-        System.out.println("这是pageinfo"+pageInfo);
+        System.out.println("这是所有用户"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
 
@@ -96,6 +97,24 @@ public class UserController {
     @PostMapping(value = "/changeUserData")
     public ResponseEntity<?> changeUserData(@RequestBody UserVO userVO) {
         userService.changeUserData(userVO);
+        return ResponseEntity.ok("操作成功");
+    }
+
+    @GetMapping(value = "/findRolesByUid")
+    public ResponseEntity<?> findRolesByUid(@RequestParam("userId") int userId) {
+        List<RoleVO> list=userService.findRolesByUid(userId);
+        System.out.println("list" +list);
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping(value = "/updateRoles")
+    public ResponseEntity<?> updateRoles(@RequestParam("ids") String ids,@RequestParam("userId") int userId) {
+        List<String> list = Arrays.asList(ids.split(","));
+        System.out.println("这是ids"+list+"这是uid"+userId);
+        int i = userService.deleteAll(userId);
+        userService.updateRoles(list,userId);
+
+
         return ResponseEntity.ok("操作成功");
     }
 }

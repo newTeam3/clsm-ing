@@ -51,5 +51,11 @@ public interface UserMapper {
 
     UserVO findUserByID(int id);
 
+    List<RoleVO> findRolesByUid(int userId);
+
     int changeUserData(UserVO userVO);
+
+    int deleteAll(@Param("userId") int userId);
+
+    int updateRoles(@Param("roleId") String roleId, @Param("userId") int userId);
 }

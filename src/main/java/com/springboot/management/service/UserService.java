@@ -2,6 +2,7 @@ package com.springboot.management.service;
 
 import com.github.pagehelper.PageInfo;
 import com.springboot.management.common.utils.PageVO;
+import com.springboot.management.vo.RoleVO;
 import com.springboot.management.vo.Task;
 import com.springboot.management.vo.UserVO;
 
@@ -28,4 +29,10 @@ public interface UserService {
     UserVO findUserByID(int id);
 
     void changeUserData(UserVO userVO);
+
+    List<RoleVO> findRolesByUid(int userId);
+
+    void updateRoles(List list,int uid);
+
+    int  deleteAll(int userId);
 }

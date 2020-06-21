@@ -105,4 +105,24 @@ public class UserServiceImpl implements UserService {
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }
     }
+
+    @Override
+    public List<RoleVO> findRolesByUid(int userId) {
+        List<RoleVO> list=userMapper.findRolesByUid(userId);
+        return list;
+    }
+
+    @Override
+    public void updateRoles(List list,int uid) {
+        for(int j=0;j<list.size();j++){
+            int i1=userMapper.updateRoles(list.get(j).toString(),uid);
+        }
+    }
+
+    @Override
+    public int deleteAll(int userId) {
+        int i=userMapper.deleteAll(userId);
+        return i;
+    }
+
 }

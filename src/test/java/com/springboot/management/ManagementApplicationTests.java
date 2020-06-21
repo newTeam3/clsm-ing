@@ -18,7 +18,7 @@ class ManagementApplicationTests {
 
     @Test
     void contextLoads() {
-        UserVO user = userMapper.getUserByName("444");
+        UserVO user = userMapper.getUserByName("admin");
         System.out.println(user);
 
         String encode = passwordEncoder.encode("123");
