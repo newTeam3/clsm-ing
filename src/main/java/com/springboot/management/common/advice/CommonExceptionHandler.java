@@ -5,7 +5,11 @@ import com.springboot.management.common.vo.ExceptionResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
+/*
+* 左创源
+* 4.16
+*
+* */
 @ControllerAdvice
 public class CommonExceptionHandler {
     @ExceptionHandler(MyException.class)

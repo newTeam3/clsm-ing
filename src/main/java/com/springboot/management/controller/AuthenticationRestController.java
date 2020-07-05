@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
-/**
- * 授权控制器
- *
- *
- */
+/*
+ * 左创源
+ * 4.26
+ *授权管理器
+ * */
 @RestController
 public class AuthenticationRestController {
 
@@ -55,7 +55,7 @@ public class AuthenticationRestController {
     final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
     final String token = jwtTokenUtil.generateToken(userDetails);
 
-    return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+    return ResponseEntity.ok(new JwtAuthenticationResponse(token,userDetails));
   }
 
   /**

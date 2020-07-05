@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-
+/*
+ * 李子湘
+ * 4.27
+ *学院增删改查的控制层
+ * */
 @RestController
 @RequestMapping("/college")
 public class CollegeController {
@@ -20,9 +24,7 @@ public class CollegeController {
 
     @PostMapping(value = "/findAll")
     public ResponseEntity<?> findAll(@RequestBody PageVO pageVO) {
-        System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = collegeService.findAll(pageVO);
-        System.out.println("这是pageinfo"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
 
@@ -30,14 +32,12 @@ public class CollegeController {
     @PostMapping(value = "/addCollege")
     public ResponseEntity<?> addCollege(@RequestBody College college) {
         collegeService.addCollege(college);
-        System.out.println(college);
         return ResponseEntity.ok("操作成功");
     }
     //修改学院信息
     @PostMapping(value = "/updateCollege")
     public ResponseEntity<?> updateCollege(@RequestBody College college) {
         collegeService.updateCollege(college);
-        System.out.println(college);
         return ResponseEntity.ok("操作成功");
     }
     //单个学院的启用及禁用
@@ -51,7 +51,6 @@ public class CollegeController {
     public ResponseEntity<?> banRows(@RequestParam("ids") String ids) {
         List<String> list = Arrays.asList(ids.split(","));
         collegeService.banRows(list);
-        System.out.println("这是list" + list);
         return ResponseEntity.ok("操作成功");
     }
 

@@ -3,7 +3,11 @@ import com.springboot.management.vo.Bank;
 import com.springboot.management.vo.Wor;
 
 import java.util.List;
-
+/*
+ *@Author 李恒彪
+ * @date 2020/05/04
+ *
+ */
 public interface WorService {
 
     void save(Wor wor);

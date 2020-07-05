@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.management.mapper.RoleMapper">
+    <select id="findAllRoles" parameterType="map" resultType="roleVO">
+        select * from role
+        <where>
+            <if test="id != null and id !=''">
+                and id = #{id}
+            </if>
+            <if test="roleName != null and roleName !=''">
+                and roleName like concat("%",#{roleName},"%")
+            </if>
+        </where>
+    </select>
+
+    <insert id="addRole" parameterType="roleVO">
+        INSERT INTO role (roleName,remark) VALUES ( #{roleName},#{remark})
+    </insert>
+
+    <update id="updateRole" parameterType="roleVO">
+        UPDATE role SET roleName=#{roleName},remark=#{remark} where id=#{id}
+    </update>
+</mapper>

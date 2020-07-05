@@ -4,7 +4,11 @@ import com.springboot.management.vo.Bank;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
+/*
+ *@Author 李恒彪
+ * @date 2020/04/16
+ *
+ */
 public interface BankDao {
 
     void save(Bank bank);

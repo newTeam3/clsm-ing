@@ -1,4 +1,9 @@
 package com.springboot.management.mapper;
+/*
+ *@Author 李恒彪
+ * @date 2020/05/04
+ *
+ */
 import com.springboot.management.vo.Bank;
 import com.springboot.management.vo.Wor;
 import org.apache.ibatis.annotations.Mapper;

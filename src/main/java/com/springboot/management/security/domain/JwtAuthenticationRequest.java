@@ -1,9 +1,10 @@
 package com.springboot.management.security.domain;
 
 import java.io.Serializable;
-
-/**
- * 封装接收的用户名和密码
+/*
+ *@Author 左创源
+ * @date 2020/04/18
+ *封装接收的用户名和密码
  */
 public class JwtAuthenticationRequest implements Serializable {
 

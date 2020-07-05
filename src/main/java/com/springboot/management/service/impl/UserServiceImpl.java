@@ -125,4 +125,26 @@ public class UserServiceImpl implements UserService {
         return i;
     }
 
+    @Override
+    public Map<String, Object> getTotalData(int id) {
+        int i=userMapper.getArticalAll(id);
+        int i1=userMapper.getCommentAll(id);
+        int i2=userMapper.getCommentQuantityAll(id);
+        int i3=userMapper.getMessageAll(id);
+        int i4=userMapper.getQuestionAll(id);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("artTotal",i);
+        map.put("comTotal",i1);
+        map.put("quanTotal",i2);
+        map.put("mesTotal",i3);
+        map.put("questionTotal",i4);
+        return map;
+    }
+
+    @Override
+    public UserVO checkUserName(String username) {
+        UserVO userVO=userMapper.checkUserName(username);
+        return userVO;
+    }
+
 }

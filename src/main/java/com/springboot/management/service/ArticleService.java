@@ -37,4 +37,9 @@ public interface ArticleService {
     void addComments(Comment comment);
 
     void addReply(Comment comment);
+
+    PageInfo getReply(PageVO pageVO);
+
+    PageInfo getArticleComment(PageVO pageVO);
+
 }

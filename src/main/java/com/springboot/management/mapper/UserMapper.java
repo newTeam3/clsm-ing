@@ -5,7 +5,11 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
-
+/*
+ *@Author 左创源
+ * @date 2020/04/18
+ *
+ */
 @Mapper
 public interface UserMapper {
 
@@ -58,4 +62,16 @@ public interface UserMapper {
     int deleteAll(@Param("userId") int userId);
 
     int updateRoles(@Param("roleId") String roleId, @Param("userId") int userId);
+
+    int getMessageAll(int id);
+
+    int getArticalAll(int id);
+
+    int getQuestionAll(int id);
+
+    int getCommentAll(int id);
+
+    int getCommentQuantityAll(int id);
+
+    UserVO checkUserName(String username);
 }

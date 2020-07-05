@@ -17,7 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+ *@Author 左创源
+ * @date 2020/04/18
+ *文章service实现层
+ */
 @Service
 @Transactional
 public class ArticleServiceImpl implements ArticleService {
@@ -159,5 +163,21 @@ public class ArticleServiceImpl implements ArticleService {
         if (i==0){
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }
+    }
+    //查看文章中回复我的消息
+    @Override
+    public PageInfo getReply(PageVO pageVO) {
+        PageHelper.startPage(pageVO.getPage(), pageVO.getRows());
+        List<Comment> list = articleMapper.getReply(pageVO.getKey());
+        PageInfo info = new PageInfo(list);
+        return info;
+    }
+
+    @Override
+    public PageInfo getArticleComment(PageVO pageVO) {
+        PageHelper.startPage(pageVO.getPage(), pageVO.getRows());
+        List<Comment> list = articleMapper.getArticleComment(pageVO.getKey());
+        PageInfo info = new PageInfo(list);
+        return info;
     }
 }

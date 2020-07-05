@@ -6,8 +6,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-/**
- */
+/*
+ * 左创源
+ * 4.16
+ *开启后端的跨域
+ * */
 @Configuration
 public class CorsConfigur {
     //允许跨域访问的源服务器域名或ip地址

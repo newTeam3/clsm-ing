@@ -6,7 +6,11 @@ import com.springboot.management.vo.Exam;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
+/*
+ *@Author 李恒彪
+ * @date 2020/04/16
+ *
+ */
 public interface ExamDao {
     void save(Exam exam);
 

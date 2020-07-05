@@ -29,4 +29,6 @@ public interface QuestionService {
     Map<String,Object> findQuestionById(int id);
 
     void addQuestion(Question question);
+
+    PageInfo findRequestionComment(PageVO pageVO);
 }

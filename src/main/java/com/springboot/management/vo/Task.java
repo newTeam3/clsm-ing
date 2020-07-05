@@ -1,5 +1,9 @@
 package com.springboot.management.vo;
-
+/*
+ *@Author 左创源
+ * @date 2020/04/12
+ *
+ */
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,5 +1,9 @@
 package com.springboot.management.vo;
-
+/*
+ *@Author 李恒彪
+ * @date 2020/06/10
+ *
+ */
 
 public class FileSystem {
     private String fileId;

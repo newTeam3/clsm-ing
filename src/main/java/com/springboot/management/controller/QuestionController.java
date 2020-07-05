@@ -15,70 +15,67 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+/*
+ *@Author 王立维
+ * @date 2020/05/09
+ */
 
 @RestController
 @RequestMapping("/question")
 public class QuestionController {
     @Autowired
     QuestionService questionService;
-
+    //得到所有发布的提问
     @PostMapping(value = "/findAll")
     public ResponseEntity<?> findAll(@RequestBody PageVO pageVO) {
-        System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = questionService.findAll(pageVO);
-        System.out.println("这是pageinfo"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
+    //回复一个提问
     @PostMapping(value = "/reply")
     public ResponseEntity<?> reply(@RequestBody Answer answer) {
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         answer.setTime(timestamp);
         questionService.reply(answer);
-        System.out.println(answer);
         return ResponseEntity.ok("操作成功");
     }
-
+    //通过提问的id搜索所有回复
     @GetMapping(value = "/findAnswerByQid")
     public ResponseEntity<?> findAnswerByQid(@RequestParam("qid") int qid) {
         List<Answer> list = questionService.findAnswerByQid(qid);
-        System.out.println("这是list" + list);
         return ResponseEntity.ok(list);
     }
-
+    //禁用单个提问帖子
     @PostMapping(value = "/banQuestion")
     public ResponseEntity<?> banQuestion(@RequestBody Question question) {
         questionService.banQuestion(question);
         return ResponseEntity.ok("操作成功");
     }
-
+    //批量禁用提问的帖子
     @GetMapping(value = "/banRows")
     public ResponseEntity<?> banRows(@RequestParam("ids") String ids) {
         List<String> list = Arrays.asList(ids.split(","));
         questionService.banRows(list);
-        System.out.println("这是list" + list);
         return ResponseEntity.ok("操作成功");
     }
-
+    //查询所有提问的回复
     @PostMapping(value = "/findAllAnswer")
     public ResponseEntity<?> findAllAnswer(@RequestBody PageVO pageVO) {
-        System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = questionService.findAllAnswer(pageVO);
-        System.out.println("这是pageinfo"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
-
+    //禁用回答
     @PostMapping(value = "/banAnswer")
     public ResponseEntity<?> banAnswer(@RequestBody Answer answer) {
         questionService.banAnswer(answer);
         return ResponseEntity.ok("操作成功");
     }
-
+    //批量禁用回答
     @GetMapping(value = "/banAnswerRows")
     public ResponseEntity<?> banAnswerRows(@RequestParam("ids") String ids) {
         List<String> list = Arrays.asList(ids.split(","));
         questionService.banAnswerRows(list);
-        System.out.println("这是list" + list);
         return ResponseEntity.ok("操作成功");
     }
     //根据id查找问题
@@ -96,5 +93,11 @@ public class QuestionController {
         question.setTime(timestamp);
         questionService.addQuestion(question);
         return ResponseEntity.ok("操作成功");
+    }
+    //查找提问的回答
+    @PostMapping(value = "/findRequestionComment")
+    public ResponseEntity<?> findRequestionComment(@RequestBody PageVO pageVO) {
+        PageInfo pageInfo = questionService.findRequestionComment(pageVO);
+        return ResponseEntity.ok(pageInfo);
     }
 }

@@ -2,7 +2,11 @@ package com.springboot.management.common.vo;
 
 import com.springboot.management.common.enums.ExceptionEnum;
 import lombok.Data;
-
+/*
+ * 左创源
+ * 4.16
+ *异常实体类
+ * */
 @Data
 public class ExceptionResult {
 

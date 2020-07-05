@@ -6,7 +6,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
-
+/*
+ *@Author 左创源
+ * @date 2020/04/12
+ *
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +19,7 @@ public class Comment {
     private Integer aid;
     private Integer uid;
     private Integer pid;
+    private String title;
     private String img;
     private String name;
     private String content;

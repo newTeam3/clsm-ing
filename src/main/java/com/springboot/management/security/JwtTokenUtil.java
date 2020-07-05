@@ -18,7 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-/**
+/**左创源
+ * 2020/04/18
  * jwt工具类
  * 签发token\刷新token\校验token是否失效\从token中解析用户名
  */

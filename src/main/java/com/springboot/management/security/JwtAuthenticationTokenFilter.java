@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
+/**左创源
+ * 2020/04/18
  * JWT 过滤器
  * 校验请求的token是否有效，完成用户授权加载
  */

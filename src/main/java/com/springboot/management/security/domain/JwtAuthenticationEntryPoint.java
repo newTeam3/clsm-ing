@@ -7,10 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
-
-/**
- * 没有访问权限时发送一个401未经授权的响应
+/*
+ *@Author 左创源
+ * @date 2020/04/18
+ *没有访问权限时发送一个401未经授权的响应
  */
+
+
+
 @Component
 public class JwtAuthenticationEntryPoint
         implements AuthenticationEntryPoint, Serializable {

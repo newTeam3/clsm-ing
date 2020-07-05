@@ -123,4 +123,29 @@
     <insert id="updateRoles">
       INSERT INTO user_role (userId, roleId) VALUES (#{userId},#{roleId})
     </insert>
+
+    <select id="getMessageAll" resultType="int">
+        select count(*) from message where uid=#{id}
+    </select>
+
+    <select id="getArticalAll" resultType="int">
+        select count(*) from article where uid=#{id}
+    </select>
+
+    <select id="getQuestionAll" resultType="int">
+        select count(*) from question where uid=#{id}
+    </select>
+
+    <select id="getCommentAll" resultType="int">
+         select count(*) from comment where aid in (select id from article where uid=#{id})
+    </select>
+
+    <select id="getCommentQuantityAll" resultType="int">
+          select sum(quantity) from article where uid =#{id}
+    </select>
+
+<!-- 检查是否用户名已存在-->
+    <select id="checkUserName" parameterType="string" resultType="userVO">
+        select * from user where username=#{username}
+    </select>
 </mapper>

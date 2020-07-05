@@ -6,9 +6,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
-
-/**
- * 用于安全校验的用户类
+/*
+ *@Author 左创源
+ * @date 2020/04/18
+ *用于安全校验的用户类
  */
 public class JwtUser implements UserDetails{
 
@@ -19,9 +20,10 @@ public class JwtUser implements UserDetails{
     private final String img;
     private final Date lastPasswordResetDate;
     private final boolean enabled;
+    private final int status;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUser(Integer id, String username, String password,String name,String img, Date lastPasswordResetDate, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUser(Integer id, String username, String password,String name,String img, Date lastPasswordResetDate, boolean enabled,int status, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -29,6 +31,7 @@ public class JwtUser implements UserDetails{
         this.img = img;
         this.lastPasswordResetDate = lastPasswordResetDate;
         this.enabled = enabled;
+        this.status=status;
         this.authorities = authorities;
     }
 
@@ -62,6 +65,10 @@ public class JwtUser implements UserDetails{
 
     public String getImg() {
         return img;
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     @JsonIgnore

@@ -4,7 +4,11 @@ import com.springboot.management.vo.Groups;
 
 import java.util.List;
 import java.util.Map;
-
+/*
+ *@Author 聂精威
+ * @date 2020/05/04
+ *
+ */
 public interface GroupMapper {
     List<Groups> findAll(Map<Object,Object> map);
 

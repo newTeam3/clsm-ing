@@ -18,18 +18,21 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+/*
+ *@Author 林海峰
+ * @date 2020/05/11
+ * 发布公告和发布报告任务
+ */
 
 @RestController
 @RequestMapping("/task")
 public class TaskController {
     @Autowired
     TaskService taskService;
-
+    //查询所有公告
     @PostMapping(value = "/findAll")
     public ResponseEntity<?> findAll(@RequestBody PageVO pageVO) {
-        System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = taskService.findAll(pageVO);
-        System.out.println("这是pageinfo"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
 
@@ -62,15 +65,12 @@ public class TaskController {
     public ResponseEntity<?> banRows(@RequestParam("ids") String ids) {
         List<String> list = Arrays.asList(ids.split(","));
         taskService.banRows(list);
-        System.out.println("这是list" + list);
         return ResponseEntity.ok("操作成功");
     }
-
+    //查询所有报告发布任务
     @PostMapping(value = "/findAllTask")
     public ResponseEntity<?> findAllTask(@RequestBody PageVO pageVO) {
-        System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = taskService.findAllTask(pageVO);
-        System.out.println("这是pageinfo"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
 
@@ -103,20 +103,17 @@ public class TaskController {
     public ResponseEntity<?> banTaskRows(@RequestParam("ids") String ids) {
         List<String> list = Arrays.asList(ids.split(","));
         taskService.banTaskRows(list);
-        System.out.println("这是list" + list);
         return ResponseEntity.ok("操作成功");
     }
-
+    //查找已经提交周报和未提交周报的用户
     @GetMapping(value = "/findCommitData")
     public ResponseEntity<?> findCommitData(@RequestParam("id") int id) {
         Map<String, Object> map = taskService.findCommitData(id);
-        System.out.println("map" +map);
         return ResponseEntity.ok(map);
     }
 
     @GetMapping(value = "/checkTask")
     public ResponseEntity<?> checkTask(@RequestParam("uid") int uid,@RequestParam("tid") int tid) {
-
         boolean flag=taskService.checkTask(uid,tid);
         return ResponseEntity.ok(flag);
     }

@@ -1,7 +1,8 @@
 package com.springboot.management.controller;
 /*
- *@Author lee
+ *@Author 李恒彪
  * @date 2020/06/18
+ *完成头像上传
  */
 
 
@@ -22,7 +23,7 @@ import java.util.UUID;
 @RequestMapping("/filesystem")
 public class FileServerController {
 
-    private String upload_location="F:\\";
+    private String upload_location="D:\\";
 
     @PostMapping("/upload")
     @ResponseBody

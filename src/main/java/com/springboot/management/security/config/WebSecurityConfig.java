@@ -21,9 +21,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/**
- * Web 安全配置类
- *
+/*
+ *@Author 左创源
+ * @date 2020/04/18
+ *web安全配置类
  */
 @Configuration
 @EnableWebSecurity

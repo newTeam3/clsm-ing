@@ -103,14 +103,4 @@
         select * from message where uid=#{uid} and tid=#{tid}
     </select>
 
-<!--    <select id="getTaskByUid" parameterType="map" resultType="task">-->
-<!--        select * from task where id in (select tid from message where uid =#{uid} and status=#{status})-->
-<!--        <if test="content != null and content !=''">-->
-<!--            and content like concat("%",#{content},"%")-->
-<!--        </if>-->
-<!--        <if test="sort != null ">-->
-<!--            and sort =#{sort}-->
-<!--        </if>-->
-
-<!--    </select>-->
 </mapper>

@@ -6,8 +6,9 @@ spring:
     username: classes
     password: 'cmjLSZRhp54iahfX'
   redis:
-    host: 127.0.0.1
+    host: 47.115.114.18
     port: 6379
+    password: 123456
   jackson:
     #json转换的时间格式设置
     time-zone: GMT+8

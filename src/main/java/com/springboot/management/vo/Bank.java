@@ -1,5 +1,9 @@
 package com.springboot.management.vo;
-
+/*
+ *@Author 李恒彪
+ * @date 2020/04/14
+ *
+ */
 
 public class Bank {
     private  Integer id;

@@ -14,7 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+/*
+ *@Author 李子湘
+ * @date 2020/05/02
+ *
+ */
 @Service
 @Transactional
 public class CollegeServiceImpl implements CollegeService {

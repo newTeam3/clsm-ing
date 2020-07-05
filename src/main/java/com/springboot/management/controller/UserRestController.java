@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-
+/*
+ *@Author 左创源
+ * @date 2020/04/26
+ * 通过token，获取当前登录用户的信息
+ */
 /**
  * 获取已授权用户信息
  *
@@ -29,7 +33,7 @@ public class UserRestController {
   @Autowired
   @Qualifier("jwtUserService")
   private UserDetailsService userDetailsService;
-
+  //获取前端传回来的token并解析，获取用户名，并通过用户名查找详细信息
   @RequestMapping(value = "/user", method = RequestMethod.GET)
   public JwtUser getAuthenticatedUser(HttpServletRequest request) {
     //获取当前登录用户信息

@@ -12,24 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
+/*
+ * 杨伟棋
+ * 5.6
+ *获取echarts报表所需要的数据
+ * */
 @RestController
 @RequestMapping("/echarts")
 public class EchartsController {
     @Autowired
     EchartsService echartsService;
-
+    //得到每个学院的班级数量
     @GetMapping("/getClasses")
     public ResponseEntity<?> getClasses() {
         List<Map<String,Object>> list = echartsService.getClasses();
-        System.out.println("list" + list);
         return ResponseEntity.ok(list);
     }
-
+    //获取男女性别数量
     @GetMapping("/getSex")
     public ResponseEntity<?> getSex() {
         List<Map<String,Object>> list = echartsService.getSex();
-        System.out.println("list" + list);
         return ResponseEntity.ok(list);
     }
 }

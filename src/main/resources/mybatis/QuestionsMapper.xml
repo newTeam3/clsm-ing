@@ -115,4 +115,8 @@
     <insert id="addQuestion" parameterType="question">
         INSERT INTO question (title, content,time,uid,quanity,status,state) VALUES ( #{title}, #{content},#{time},#{userVO.id},0,0,1)
     </insert>
+
+    <select id="findRequestionComment" parameterType="map" resultMap="answerResult2">
+        select a.*,q.id as q_id,q.title as q_title,u.id as u_id,u.name as u_name FROM answer a,question q,user u where a.uid=u.id and a.qid=q.id and qid = (select id from question where uid=#{uid})
+    </select>
 </mapper>

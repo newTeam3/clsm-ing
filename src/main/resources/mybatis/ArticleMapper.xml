@@ -89,4 +89,14 @@
         INSERT INTO comment (content, uid,aid,status,pid,time) VALUES ( #{content}, #{uid},#{aid},1,#{pid},#{time})
     </insert>
 
+    <select id="getReply" parameterType="int" resultType="comment">
+     SELECT c.id,c.aid,c.pid,c.uid,u.name,u.img,c.content,c.time
+        FROM comment c,user u WHERE c.uid=u.id and c.pid in (select id from comment where uid=#{id})
+    </select>
+
+    <select id="getArticleComment" parameterType="int" resultType="comment">
+    SELECT c.id,c.aid,a.title,c.pid,c.uid,u.name,u.img,c.content,c.time
+    FROM comment c,user u,article a WHERE c.uid=u.id and c.aid=a.id and c.aid in(select id from article where uid=#{id}) and c.pid is null
+    </select>
+
 </mapper>

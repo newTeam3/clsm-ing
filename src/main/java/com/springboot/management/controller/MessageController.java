@@ -12,28 +12,30 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+/*
+ *@Author 李明良
+ * @date 2020/05/18
+ * 日周报模块的控制类
+ */
 
 @RestController
 @RequestMapping("/message")
 public class MessageController {
     @Autowired
     MessageService messageService;
-
+    //查询所有日周报
     @PostMapping(value = "/findAll")
     public ResponseEntity<?> findAll(@RequestBody PageVO pageVO) {
-        System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = messageService.findAll(pageVO);
-        System.out.println("这是pageinfo"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
-
+    //通过报告id查询老师的评语
     @GetMapping(value = "/findEvaluateByMid")
     public ResponseEntity<?> findEvaluateByMid(@RequestParam("mid") int mid) {
         List<Evaluate> list = messageService.findEvaluateByMid(mid);
-        System.out.println("这是list" + list);
         return ResponseEntity.ok(list);
     }
-
+    //老师在后台提交报告评语
     @PostMapping(value = "/evaluate")
     public ResponseEntity<?> evaluate(@RequestBody Evaluate evaluate) {
         Date date = new Date();
@@ -42,32 +44,29 @@ public class MessageController {
         messageService.evaluate(evaluate);
         return ResponseEntity.ok("操作成功");
     }
-
+    //禁用单个报告
     @PostMapping(value = "/banMessage")
     public ResponseEntity<?> banMessage(@RequestBody Message message) {
         messageService.banMessage(message);
         return ResponseEntity.ok("操作成功");
     }
-
+    //批量禁用报告
     @GetMapping(value = "/banMessageRows")
     public ResponseEntity<?> banMessageRows(@RequestParam("ids") String ids) {
         List<String> list = Arrays.asList(ids.split(","));
         messageService.banMessageRows(list);
-        System.out.println("这是list" + list);
         return ResponseEntity.ok("操作成功");
     }
-
+    //通过报告类型得到所有的报告发布任务
     @GetMapping(value = "/getContentAll")
     public ResponseEntity<?> getContentAll(@RequestParam("sort") int sort) {
         List<Task> list = messageService.getContentAll(sort);
         return ResponseEntity.ok(list);
     }
-
+    //查住所有周报
     @PostMapping(value = "/findAllWeekReport")
     public ResponseEntity<?> findAllWeekReport(@RequestBody PageVO pageVO) {
-        System.out.println("这是pagevo"+pageVO);
         PageInfo pageInfo = messageService.findAllWeekReport(pageVO);
-        System.out.println("这是pageinfo"+pageInfo);
         return ResponseEntity.ok(pageInfo);
     }
 
@@ -81,11 +80,13 @@ public class MessageController {
         messageService.commit(message);
         return ResponseEntity.ok("操作成功");
     }
+    //查询报告详情
     @GetMapping(value = "/getMessageItem")
     public ResponseEntity<?> getMessageItem(@RequestParam("id") int id) {
         Message message=messageService.getMessageItem(id);
         return ResponseEntity.ok(message);
     }
+    //通过用户id查询报告
     @PostMapping(value = "/getMessageByUid")
     public ResponseEntity<?> getMessageByUid(@RequestBody PageVO pageVO) {
         PageInfo pageInfo = messageService.getMessageByUid(pageVO);

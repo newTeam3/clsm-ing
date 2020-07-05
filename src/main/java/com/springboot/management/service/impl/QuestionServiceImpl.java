@@ -110,4 +110,12 @@ public class QuestionServiceImpl implements QuestionService {
             throw new MyException(ExceptionEnum.SERVER_CONGESTION);
         }
     }
+
+    @Override
+    public PageInfo findRequestionComment(PageVO pageVO) {
+        PageHelper.startPage(pageVO.getPage(), pageVO.getRows());
+        List<Answer> list = questionsMapper.findRequestionComment(pageVO.getKey());
+        PageInfo info = new PageInfo(list);
+        return info;
+    }
 }

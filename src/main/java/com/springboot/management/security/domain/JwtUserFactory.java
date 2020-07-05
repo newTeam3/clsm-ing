@@ -8,9 +8,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-/**
- * 用工厂模式创建JwtUser
+/*
+ *@Author 左创源
+ * @date 2020/04/18
+ *用工厂模式创建JwtUser
  */
 public class JwtUserFactory {
 
@@ -22,6 +23,7 @@ public class JwtUserFactory {
                 user.getImg(),
                 user.getLastPasswordResetDate(),
                 user.getStatus()==1?true:false,
+                user.getStatus(),
                 mapToAuthority(user.getRoles()));
     }
 

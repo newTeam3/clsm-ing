@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+/*
+ *@Author 李恒彪
+ * @date 2020/04/15
+ *返回给前端的token
+ */
 @Service
 @Transactional
 public class BankServiceImpl implements BankService {
